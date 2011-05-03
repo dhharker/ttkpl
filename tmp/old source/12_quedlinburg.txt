@@ -1,0 +1,42 @@
+
+API for European stuff for paper spreadsheet.
+DRRC version: production v. 0.3 alpha
+Running at 2011-02-09 21:52:39 on chasm x86_64
+
+
+Sample information:
+	Age/years bp:						4075
+	Name/location:						"12_Quedlinburg"
+	Year found AD:						2000AD
+	Location found:						+51.7928N +011.1508E
+	Year analysed AD:					2009AD
+
+Reaction:
+	Description:						DNA depurination (bone)
+	Activation energy/kJ mol.^-1:		00126940
+	Pre-exponential factor/sec.:		017745329175.8562126
+
+Temporothermal environment:
+	Description:						Burial under 4m of dry, clay soil
+	Burial depth, thermal diffusivity:	(4m,0.18)
+	Effective temperature/deg. C:		15.13
+	Age/years:							4125
+	Thermal age/10C thermal years:		10763
+	Lambda:								0.023058148
+	Mean fragment length (DNA):			44
+
+Temporothermal environment:
+	Description:						Hypothetical constant 16C storage between excavation and analysis
+	Effective temperature/deg. C:		16.00
+	Age/years:							9
+	Thermal age/10C thermal years:		27
+	Lambda:								0.000059024
+	Mean fragment length (DNA):			16943
+
+Compound temporothermal environment (the important bit):
+	Description:						The sum of reaction over specified time and temperature range
+	Effective temperature/deg. C:		15.13
+	Age at analysis/years:				4134
+	Thermal age/10C thermal years:		10790
+	Lambda:								0.023117172
+	Mean fragment length (DNA):			44

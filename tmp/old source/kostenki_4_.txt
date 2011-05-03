@@ -1,0 +1,42 @@
+
+API for hominin fossil spreadsheet.
+DRRC version: production v. 0.3 alpha
+Running at 2010-12-08 14:06:36 on titania i686
+
+
+Sample information:
+	Age/years bp:						30000
+	Name/location:						"Kostenki[4]"
+	Year found AD:						1954AD
+	Location found:						+51.4000N +039.0000E
+	Year analysed AD:					2003AD
+
+Reaction:
+	Description:						DNA depurination (bone)
+	Activation energy/kJ mol.^-1:		00126940
+	Pre-exponential factor/sec.:		017745329175.8562126
+
+Temporothermal environment:
+	Description:						Burial under rock
+	Burial depth, thermal diffusivity:	(10m,0.086)
+	Effective temperature/deg. C:		3.51
+	Age/years:							30004
+	Thermal age/10C thermal years:		8477
+	Lambda:								0.018161042
+	Mean fragment length (DNA):			56
+
+Temporothermal environment:
+	Description:						Hypothetical constant 15C storage between excavation and analysis
+	Effective temperature/deg. C:		15.00
+	Age/years:							49
+	Thermal age/10C thermal years:		124
+	Lambda:								0.000267549
+	Mean fragment length (DNA):			3739
+
+Compound temporothermal environment (the important bit):
+	Description:						The sum of reaction over specified time and temperature range
+	Effective temperature/deg. C:		3.58
+	Age at analysis/years:				30053
+	Thermal age/10C thermal years:		8602
+	Lambda:								0.018428592
+	Mean fragment length (DNA):			55

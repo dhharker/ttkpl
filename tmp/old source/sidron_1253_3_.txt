@@ -1,0 +1,34 @@
+
+API for hominin fossil spreadsheet.
+DRRC version: production v. 0.3 alpha
+Running at 2010-12-08 14:06:27 on titania i686
+
+
+Sample information:
+	Age/years bp:						38790
+	Name/location:						"Sidron 1253[3]"
+	Year found AD:						2003AD
+	Location found:						+43.3836N -005.3289E
+	Year analysed AD:					2003AD
+
+Reaction:
+	Description:						DNA depurination (bone)
+	Activation energy/kJ mol.^-1:		00126940
+	Pre-exponential factor/sec.:		017745329175.8562126
+
+Temporothermal environment:
+	Description:						Burial under rock
+	Burial depth, thermal diffusivity:	(10m,0.086)
+	Effective temperature/deg. C:		11.53
+	Age/years:							38843
+	Thermal age/10C thermal years:		51922
+	Lambda:								0.111231574
+	Mean fragment length (DNA):			10
+
+Compound temporothermal environment (the important bit):
+	Description:						The sum of reaction over specified time and temperature range
+	Effective temperature/deg. C:		11.53
+	Age at analysis/years:				38843
+	Thermal age/10C thermal years:		51922
+	Lambda:								0.111231574
+	Mean fragment length (DNA):			10

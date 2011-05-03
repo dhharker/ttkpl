@@ -1,0 +1,14 @@
+20080904_1759      inpath = /home/motifdb/incoming_pmip2/IPSL-CM4-V1-MR/20080904_out/
+20080904_1759      infile = tasmax_A_SE_pmip2_6k_oa_IPSL-CM4-V1-MR_2320-2419.nc
+20080904_1759   sizebytes = 339268
+20080904_1759        date = Sep 04 2008 14:19:59 CEST
+20080904_1759    datefull = (2008, 9, 4, 14, 19, 59, 3, 248, 1)
+20080904_1759      md5sum = c0d1e240639b55ccbb6b7417c6a94cf8
+20080904_1759      dbpath = /home/motifdb/pmip2db/pmip2_6k_oa/atm/se/tasmax
+20080904_1759      dbfile = tasmax_A_SE_pmip2_6k_oa_IPSL-CM4-V1-MR_2320-2419.nc
+20080904_1816           # = Added more statistics to the ctrl file
+20080904_1816  md5sum_var = 7a9eb3b84a4aa9f86b6391e23001f3b7
+20080904_1816     average = 282.969210557
+20080904_1816    aver_abs = 282.969210557
+20080904_1816      vrange = (217.01651000976562, 322.50836181640625)
+20080904_1816      trange = (1-1-16 0:0:0.0, 1-12-16 0:0:0.0)

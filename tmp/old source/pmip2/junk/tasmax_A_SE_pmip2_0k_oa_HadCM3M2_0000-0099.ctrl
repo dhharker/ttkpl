@@ -1,0 +1,15 @@
+20060125_1205      inpath = /home/motifdb/incoming_pmip2/HADCM3/20051109/
+20060125_1205      infile = tasmax_A_SE_pmip2_0k_oa_HadCM3M2_0000-0099.nc
+20060125_1205   sizebytes = 343548
+20060125_1205        date = Nov 09 2005 19:40:58 CET
+20060125_1205    datefull = (2005, 11, 9, 19, 40, 58, 2, 313, 0)
+20060125_1205      md5sum = a78a899757256cc4fe3ad1ae9429765a
+20060125_1205      dbpath = /home/motifdb/pmip2db/pmip2_0k_oa/atm/se/tasmax
+20060125_1205      dbfile = tasmax_A_SE_pmip2_0k_oa_HadCM3M2_0000-0099.nc
+20060125_1205      vshape = (12, 73, 96)
+20060125_1205      trange = (1859-1-16 0:0:0.0, 1859-12-16 0:0:0.0)
+20060125_1205      vrange = (200.7974853515625, 322.47265625)
+20060128_0052           # = Added more statistics to the ctrl file
+20060128_0052  md5sum_var = fe94345ed571b558b6559ccbc716714c
+20060128_0052     average = 279.094636435
+20060128_0052    aver_abs = 279.094636435

@@ -1,0 +1,14 @@
+20060411_1245      inpath = /home/motifdb/incoming_pmip2/HADCM3/20060328/
+20060411_1245      infile = tasmin_A_SE_pmip2_21k_oa_HadCM3M2_0000-0099.nc
+20060411_1245   sizebytes = 343792
+20060411_1245        date = Mar 28 2006 12:22:34 CEST
+20060411_1245    datefull = (2006, 3, 28, 12, 22, 34, 1, 87, 1)
+20060411_1245      md5sum = 8241e6aa79210671299e68de77628b69
+20060411_1245      dbpath = /home/motifdb/pmip2db/pmip2_21k_oa/atm/se/tasmin
+20060411_1245      dbfile = tasmin_A_SE_pmip2_21k_oa_HadCM3M2_0000-0099.nc
+20060411_1245      vshape = (12, 73, 96)
+20060411_1245      trange = (0-1-1 0:0:0.0, 0-12-1 0:0:0.0)
+20060411_1245      vrange = (182.69232177734375, 304.09140014648438)
+20060411_1245     average = 267.384374158
+20060411_1245    aver_abs = 267.384374158
+20060411_1245  md5sum_var = efb4a17595066afccce249603299b9da
