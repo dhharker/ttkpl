@@ -1,7 +1,23 @@
 <?php
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
+
+
+class dnaHistogram extends histogram {
+
+    function numBonds () {
+        $this->numBonds = 0;
+        $this->bondsInBin = array();
+        foreach ($this->bins as $numBonds => $numFragments) {
+            $this->bondsInBin[$numBonds] = $numBonds * $numFragments;
+            $this->numBonds += $this->bondsInBin[$numBonds];
+        }
+        return $this->numBonds;
+    }
+
+}
+
+
 
 ?>
