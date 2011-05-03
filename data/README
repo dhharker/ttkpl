@@ -1,0 +1,8 @@
+Due to licensing restrictions, we can't include the data here. The files you need are:
+
+orog_A_FX_pmip2_0k_oa_HadCM3M2.nc        tasmax_A_SE_pmip2_0k_oa_HadCM3M2_0000-0099.nc   tasmin_A_SE_pmip2_0k_oa_HadCM3M2_0000-0099.nc
+orog_A_FX_pmip2_21k_oa_HadCM3M2.nc       tasmax_A_SE_pmip2_21k_oa_HadCM3M2_0000-0099.nc  tasmin_A_SE_pmip2_21k_oa_HadCM3M2_0000-0099.nc
+orog_A_FX_pmip2_6k_oa_UBRIS-HadCM3M2.nc  tasmax_A_SE_pmip2_6k_oa_UBRIS-HadCM3M2.nc       tasmin_A_SE_pmip2_6k_oa_UBRIS-HadCM3M2.nc
+
+
+plus a csv of global temperature anomaly against years before 1950 "bintanja.csv"
