@@ -1,6 +1,6 @@
 <?php
 /* 
- * 
+ * Standardised way of drawing pretty graphs of model i/o for use in web ui and reports
  */
 
 require_once ("../external/PHP_GNUPlot.php");
