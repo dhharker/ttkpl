@@ -91,7 +91,6 @@ class histogram {
 
 }
 
-
 abstract class correction {
     abstract public function correct ($ftVal);
     public $desc = "Undescribed!";
@@ -151,7 +150,8 @@ class deg2Polynomial extends correction {
     }
 }
 
-// abstract class chainable {
+
+/* abstract class chainable {
 //
 //     public $value;
 //
@@ -171,7 +171,7 @@ class deg2Polynomial extends correction {
 //         return $v;
 //     }
 //
-// }
+// } */
 
 
 // modified from original PrediCtoR codebase

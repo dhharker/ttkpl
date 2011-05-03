@@ -52,5 +52,3 @@ abstract class taUtils {
 
 }
 
-
-?>
