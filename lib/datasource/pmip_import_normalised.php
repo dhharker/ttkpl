@@ -1,8 +1,11 @@
 <?php
 
+/*
+ * @todo update paths so not broken
+ */
 
-//include ("data_interfaces.php");
-include ("pmip2/pmip_import.php");
+
+require_once ("pmip_import.php");
 
 class pmip extends dataSet {
     

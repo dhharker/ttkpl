@@ -112,6 +112,26 @@ class burial extends wuno {
 
 
 }
+class thermalLayer {
+
+    public $z = NULL;
+    public $Dh = NULL;
+    public $desc = "Undescribed thermal layer.";
+
+    public function __construct ($z, $Dh, $desc) {
+        if (!is_object ($z))
+            $z = scalarFactory::makeMetres ($z);
+        if (!is_object ($Dh))
+            $Dh = scalarFactory::makeThermalDiffusivity ($Dh);
+        $this->z = $z;
+        $this->Dh = $Dh;
+        $this->desc = $desc;
+    }
+    function __toString () {
+        $rdp = 3;
+        return "(".round ($this->z->getValue(), $rdp)."".$this->z->unitsShort.",".round ($this->Dh->getValue(), $rdp).")";
+    }
+}
 
 /*
 constants for hacking around with pmip2:

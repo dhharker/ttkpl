@@ -9,6 +9,10 @@ abstract class taUtils {
 
     }
 
+    /*
+     * @todo rewrite
+     * @todo write test
+     */
     function invWeightedMean ($values, $invWeights) {
         //print_r (array ($values, $invWeights));
 //         $get = function (&$v) {
