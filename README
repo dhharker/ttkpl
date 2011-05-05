@@ -1,1 +1,19 @@
-Temporo-Thermal Kinetic Prediction Library
+EU SYNTHESYS (II) project - JRA1: PrediCtoR
+
+TTKPL - Temporo-Thermal Kinetic Prediction Library
+
+This library is for predicting the totality of kinetic reactions over time. It estimates the
+temperature of samples using interpolated global climate data and takes into account the burial
+environment of the sample to model the temperature of the sample throughout its burial (and
+optionally later phases of e.g. museum storage). From this historical temperature estimate, the
+total quantity of a given chemical reaction is estimated and this has various exciting uses:
+ * Predict fragment length distribution of ancient DNA (curatorial screening tool)
+ * Give expected values for other reactions (currently starch gellation and amino acid racemisation)
+ * "Work backwards" to provide access to diagenetic quantification as a sample dating proxy
+ * More clever stuff than this! Papers are currently under preparation.
+
+More information on the SYNTHESYS project:
+http://www.synthesys.info/II_JRA_1.htm
+
+Website that will eventually host a web interface to this library:
+http://thermal-age.eu/
