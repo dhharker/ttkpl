@@ -3,7 +3,6 @@
  * This file includes all the various bits of the library and provides a point of entry.
  * Include this file in your app to use the library.
  *
- * @todo try loading this and fix whatever paths are broken by refactoring
  * @todo make somewhere for all the frontend chainable magic glue to go
  * @todo rewrite maths to use arbitrary precision
  * @todo write said glue
@@ -21,6 +20,8 @@ require_once 'core/thermal_age.php';
 
 require_once 'datasource/bintanja_import_normalised.php';
 require_once 'datasource/pmip_import_normalised.php';
+
+require_once ("external/PHP_GNUPlot.php");
 
 require_once 'reporting/graphs.php';
 require_once 'reporting/report.php';
