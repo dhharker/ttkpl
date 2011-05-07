@@ -42,58 +42,38 @@ class taUtilsTest extends PHPUnit_Framework_TestCase {
         $values = array (100, 200, 300, 400);
         $invWeights = array (
             array (1, 1, 1, 1),
-            array (5, 15, 2e100, 2e100),
-            array (-1, 1, 2e100, 2e100),
+            array (1e100, 1e100, 1, 1),
+            array (1, 1, 1e100, 1e100),
         );
         $answers = array (
-            100,
-            150,
-            125,
-            150,
+            250.0,
+            350.0,
+            150.0,
         );
         foreach ($invWeights as $i => $in)
-            $this->assertEquals ($answers[$i], $this->object->invWeightedMean($values, $in), "Results are wrong!");
+            $this->assertEquals ((float) $answers[$i], round ($this->object->invWeightedMean($values, $in), 10), "Results are wrong!");
 
     }
 
-    public function testInvWeightedMean() {
-        $values = array (100, 200, 300, 400);
-        $invWeights = array (
-            array (1, 1, 1, 1),
-            array (5, 15, 2e100, 2e100),
-            array (-1, 1, 2e100, 2e100),
-        );
-        $answers = array (
-            100,
-            150,
-            125,
-            150,
-        );
-//        foreach ($invWeights as $i => $in)
-//            $this->assertEquals ($answers[$i], $this->object->invWeightedMean($values, $in), "Results are wrong!");
-
-    }
-
-    /**
-     *
-     */
     public function testWeightedMean() {
         $values = array (100, 200, 300, 400);
         $weights = array (
             array (1, 1, 1, 1),
-            array (5, 15, 2e100, 2e100),
+            array (1, 1, 2e100, 2e100),
             array (-1, 1, 2e100, 2e100),
+            array (2, 4, 6, 8),
         );
         $answers = array (
-            100,
-            150,
-            125,
-            150,
+            250.0,
+            350.0,
+            350.0,
+            300.0
         );
         foreach ($weights as $i => $in)
-            $this->assertEquals ($answers[$i], $this->object->weightedMean($values, $in), "Results are wrong!");
+            $this->assertEquals ($answers[$i], round ($this->object->weightedMean($values, $in), 10) , "Results are wrong!");
 
     }
+
 
     /**
      * @todo Implement testFilenameFromCrap().
