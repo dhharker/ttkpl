@@ -35,9 +35,6 @@ class taUtilsTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @todo Implement testInvWeightedMean().
-     */
     public function testInvWeightedMean() {
         $values = array (100, 200, 300, 400);
         $invWeights = array (
@@ -74,10 +71,6 @@ class taUtilsTest extends PHPUnit_Framework_TestCase {
 
     }
 
-
-    /**
-     * @todo Implement testFilenameFromCrap().
-     */
     public function testFilenameFromCrap() {
         // Remove the following lines when you implement this test.
         $str = '';

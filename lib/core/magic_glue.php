@@ -115,10 +115,18 @@ class MicroEnvironmentalRecord {
             elseif ($when == 'THEN')
                 return $this->ctcYbp;
 
+            $p = "im/(a\.?d|b?\.?c\.?e?)
+                .*?
+                ((?:-|+)?(\.[0-9]+|\[0-9](?:\.[0-9]*)))
+                .*?
+                (ye?a?rs?\s*\.?)?
+                \s*
+                (?:ago|b\.?p|a\.?d|b?\.?c\.?e?|))/";
+
             $when = preg_replace ('/[^a-z0-9\s\.]/im','',$when);
             $when = preg_replace ('/\s+/im',' ',$when);
             preg_match ('/((AD|CE)?\s*([-+]?\d+(\.\d+)?))|(([-+]?\d+(\.\d+)?)\s*(ye?a?rs?\.?)?\s*(AD|CE)?(BCE?)?(b\W{0-2}p\W{0,2})?)|(THEN)/i',$when, $matches);
-
+            print_r ($matches);
             // ... crunch and return (int) years bp
 
         }

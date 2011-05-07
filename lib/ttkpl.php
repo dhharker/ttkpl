@@ -30,7 +30,7 @@ require_once 'external/PHP_GNUPlot.php';
 require_once 'reporting/graphs.php';
 require_once 'reporting/report.php';
 // contains funky method-chaining interface to make describing complex samples less of a headache :)
-require_once 'reporting/magic_glue.php';
+require_once 'core/magic_glue.php';
 
 echo "Finished.\n";
 

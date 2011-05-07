@@ -55,7 +55,7 @@ abstract class taUtils {
      * @return string clean string for use as/in filename
      */
     static function filenameFromCrap ($crap) {
-        return preg_replace (array ('/[^a-z0-9_-]/i', '/(([_-])\2+)/'), array ('_', '_'), strtolower($str));
+        return preg_replace (array ('/[^a-z0-9_-]/i', '/(([_-])\2+)/'), array ('_', '_'), strtolower($crap));
     }
 
 }
