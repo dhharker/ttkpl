@@ -80,9 +80,11 @@ class taUtilsTest extends PHPUnit_Framework_TestCase {
      */
     public function testFilenameFromCrap() {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $str = '';
+        $pass = '_-_0123456789_abcdefghijklmnopqrstuvwxyz_abcdefghijklmnopqrstuvwxyz_';
+        for ($i = 0; $i <= 255; $i++)
+            $str .= chr ($i);
+        $this->assertEquals ($pass, $this->object->filenameFromCrap($str));
     }
 
 }
