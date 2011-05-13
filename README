@@ -18,6 +18,6 @@ http://www.synthesys.info/II_JRA_1.htm
 Website that will eventually host a web interface to this library:
 http://thermal-age.eu/
 
-This code won't work on windows, and additionally needs the php GD libraries, LaTeX. Developed on
+This code won't work on windows, and has some additional deps. This has been developed so far on
 Ubuntu, for that/debian you'll need the additional packages nco to access PMIPII data, texlive-base
 and php5-gd to generate reports.
