@@ -106,7 +106,11 @@ class MicroEnvironmentalRecord {
 
         //function _setContextualDatum ($when
 
-
+        /**
+         * Takes practically anything and converts it into the number of years before 1950.
+         * @param mixed palaeoTime object, bootstrappable numberic value or HR string
+         * @return int years before 1950 represented by $when
+         */
         function _when ($when) {
             if (is_object ($when) && is_a ($when, 'palaeoTime'))
                 return $when->getYearsBp();
