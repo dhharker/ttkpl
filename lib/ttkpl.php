@@ -8,8 +8,6 @@
  * @todo write said glue
  */
 
-echo "Begin!\n";
-
 // the abstractions on which the model is built
 require_once 'core/misc_base.php';
 require_once 'core/scalars.php';
@@ -31,7 +29,5 @@ require_once 'reporting/graphs.php';
 require_once 'reporting/report.php';
 // contains funky method-chaining interface to make describing complex samples less of a headache :)
 require_once 'core/magic_glue.php';
-
-echo "Finished.\n";
 
 ?>
