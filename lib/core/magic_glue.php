@@ -118,20 +118,27 @@ class MicroEnvironmentalRecord {
                 return $pt->getYearsBp();
             elseif ($when == 'THEN')
                 return $this->ctcYbp;
+            elseif ($when == 'NOW')
+                return (date ('Y') - 1950) * -1;
 
-            $p = "im/(a\.?d|b?\.?c\.?e?)
-                .*?
-                ((?:-|+)?(\.[0-9]+|\[0-9](?:\.[0-9]*)))
-                .*?
-                (ye?a?rs?\s*\.?)?
-                \s*
-                (?:ago|b\.?p|a\.?d|b?\.?c\.?e?|))/";
+            // Strip it down to lower case letters and numbers and .
+            $when = preg_replace ('/[^a-z0-9\.]/im', '', strtolower ($when));
+            // Find the numeric part
+            if (preg_match ("/([0-9]+(?:\.[0-9]+)?)/", $when, $m) > 0)
+                $years = $m[1];
+            else
+                return false;
 
-            $when = preg_replace ('/[^a-z0-9\s\.]/im','',$when);
-            $when = preg_replace ('/\s+/im',' ',$when);
-            preg_match ('/((AD|CE)?\s*([-+]?\d+(\.\d+)?))|(([-+]?\d+(\.\d+)?)\s*(ye?a?rs?\.?)?\s*(AD|CE)?(BCE?)?(b\W{0-2}p\W{0,2})?)|(THEN)/i',$when, $matches);
-            print_r ($matches);
-            // ... crunch and return (int) years bp
+            // Remove numeric part
+            $when = preg_replace ("[0-9.]", '', $when);
+
+            // Find AD, BCE etc.
+            if (preg_match ("/(ad|ce|bce?|bp|ago)/i", $when, $m) > 0)
+                $typeYears = $m[1];
+
+
+
+            // return (int) years bp.
 
         }
 

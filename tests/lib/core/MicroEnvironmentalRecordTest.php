@@ -127,7 +127,7 @@ class MicroEnvironmentalRecordTest extends PHPUnit_Framework_TestCase {
             'ad 1950' => '',
             'Bce100' => '',
             '1000 BC' => '',
-            '-61 b.p' => '-61',
+            '-61 b.p' => '',
             //'THEN' => '', <-- needs its own test
             '1 year ago' => 0,
             '10 yrs. ago' => 0,
