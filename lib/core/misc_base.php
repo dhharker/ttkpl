@@ -6,7 +6,6 @@
 abstract class taUtils {
     function __construct () {
         //parent::__construct ();
-
     }
 
     /**
@@ -28,7 +27,6 @@ abstract class taUtils {
     /** For calculating the mean of values weighted by the inverse of their weighting as a proportion
      * of the total of weighting values. invWeights can be thought of the "distance to" the real value
      * e.g. if it is 10°C 10m away and 20°C 2km away; values(10, 20) invweights(10, 2000)
-     * @todo rewrite
      * @param array values contains values
      * @param array invWeights contains weights to be inverted
      * @return float mean value by inverse weights
