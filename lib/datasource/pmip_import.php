@@ -37,17 +37,18 @@ class PMIP2 {
     }
     
     function __construct () {
-        $this->dbroot = dirname (__FILE__) . '/';
+        $this->dbroot = dirname (__FILE__) . '/../../data/pmip2/';
         exec ("ls " . $this->dbroot, $this->files);
     }
     
     function _extractTemps ($lat, $lon, $varname, $timename, $modelname) {
         $file = $this->_genDataFileName ($varname, $timename, $modelname);
+
         $cmd = sprintf (self::EXTRACT_COMMAND, $lon, $lat, $varname, $this->dbroot . $file);
-//         die ($cmd . "\n");
+
          exec ($cmd, $r);
         $r = implode("\n", $r);
-        //echo ($cmd);
+        
         $ts = $this->_getTempsFromOutput  ($r);
         
         return $ts;
@@ -63,6 +64,7 @@ class PMIP2 {
     
     function _genDataFileName ($varname, $timename, $modelname) {
         $expr = "/^$varname.*?$timename.*?$modelname.*?\." . self::NETCDF_DATA_EXT . "$/";
+
         foreach ($this->files as $f)
             if (preg_match ($expr, $f) > 0) {
                 $this->filename = $f;
