@@ -37,7 +37,7 @@ class PMIP2 {
     }
     
     function __construct () {
-        $this->dbroot = dirname (__FILE__) . '/../../data/pmip2/';
+        $this->dbroot = TTKPL_PATH . 'data/pmip2/';
         exec ("ls " . $this->dbroot, $this->files);
     }
     

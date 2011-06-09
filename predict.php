@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 
 
@@ -7,20 +8,26 @@
  * @author david
  */
 
+require_once 'lib/ttkpl.php';
+
+echo "\nTTKPL CLI David Harker 2011\n";
 
 // predict.php -f input.csv [-o output.csv] -v (verbose) -h (help)
-$opts = getopts ("f:o::vh");
+$opts = getopt ("f:o::vh");
 
-if (isset ($opts['h'])) {
-    echo __FILE__ . " -f input.csv [-o output.csv] -v (verbose) -h (help)\n";
+if (isset ($opts['h']) || !isset ($opts['f'])) {
+    echo "Usage: " . __FILE__ . " -f input.csv [-o output.csv] -v (verbose) -h (help)\n";
     exit ();
 }
 
+
 $verbose = isset ($opts['h']);
 
-if (!file_exists ($opts['f'])) {
+if (!file_exists ($opts['f']))
     die ("Couldn't find input file {$opts['f']}\n");
-}
+else
+    $csvInFile = $opts['f'];
+
 
 
 ?>

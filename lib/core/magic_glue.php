@@ -122,9 +122,10 @@ class MicroEnvironmentalRecord {
                 return (date ('Y') - 1950) * -1;
 
             // Strip it down to lower case letters and numbers and .
-            $when = preg_replace ('/[^a-z0-9\.]/im', '', strtolower ($when));
+            $when = preg_replace ('/[^a-z0-9.-]/im', '', strtolower ($when));
+
             // Find the numeric part
-            if (preg_match ("/([0-9]+(?:\.[0-9]+)?)/", $when, $m) > 0)
+            if (preg_match ("/(-?[0-9]+(?:\.[0-9]+)?)/", $when, $m) > 0)
                 $years = $m[1];
             else
                 return false;
@@ -133,10 +134,32 @@ class MicroEnvironmentalRecord {
             $when = preg_replace ("[0-9.]", '', $when);
 
             // Find AD, BCE etc.
-            if (preg_match ("/(ad|ce|bce?|bp|ago)/i", $when, $m) > 0)
+            $typeYears = 'bp';
+            if (preg_match ("/(ad|ce|bc|bp|ago)/i", $when, $m) > 0)
                 $typeYears = $m[1];
+            $typeYears = str_replace (array ('ad', 'bc'), array ('ce', 'bce'), $typeYears);
 
+            echo "$when = $years $typeYears\n";
 
+            // convert resulting value to int years bp
+            $years = round ($years);
+
+            switch ($typeYears) {
+                case "ago":
+                    return ($years - 1950) * -1; ;
+                    break;
+                case "ce":
+                    return ($years - 1950) * -1;
+                    break;
+                case "bce":
+                    return $years + 1950;
+                    break;
+                default:
+                case "bp":
+                    return $years;
+                    break;
+
+            }
 
             // return (int) years bp.
 
