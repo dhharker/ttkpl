@@ -284,7 +284,7 @@ class temporothermal {
             $this->setDate (new palaeoTime ($years));
             $ts = $this->tempsFromWsSine ();
             $tHist->addPoint ($ts);
-
+            
             // Graphing stuff
             if (isset ($this->intermediateSines[1])) {
                 $as0 = $this->intermediateSines[0]->A0;
@@ -303,6 +303,7 @@ class temporothermal {
                 $this->twData['ganom'][$years] = $this->gtc->getValue();
 
         }
+        
         $tHist->setBins ($numBins);
         $tHist->getBinCounts ($xText);
         return $tHist;
@@ -364,7 +365,8 @@ class temporothermal {
     function setChunkSize ($chYears) {
         $this->chunkSize = $chYears;
     }
-    function autoChunkSize ($l = 1, $u = 1000) {
+    function autoChunkSize ($l = 1, $u = 50) {
+        //return 50;
         $a = $this->rangeYrs;
         // $a / ~500 seems a good value for final results
         // 100 for test
