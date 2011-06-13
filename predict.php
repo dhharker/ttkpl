@@ -31,7 +31,7 @@ else
 $csv = new csvData ($csvIn);
 
 $detailFolder = dirname(realpath ($csvIn)) . '/' . basename ($csvIn, '.csv');
-if (!is_dir($detailFolder) && mkdir ($detailFolder))
+if (!is_dir($detailFolder) && !mkdir ($detailFolder))
     die ("Couldn't create output directory $detailFolder\n");
 
 $id_processed = array (); // keep track of which 'id'+'sample' col vals have been used
