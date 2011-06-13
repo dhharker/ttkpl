@@ -1,7 +1,4 @@
 <?php
-/* 
- * 
- */
 
 
 // Wu & Nofziger

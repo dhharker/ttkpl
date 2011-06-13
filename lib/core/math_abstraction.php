@@ -19,7 +19,6 @@ class histogram {
 
     public function addPoint ($x) {
         $x = (array) $x;
-        //$this->x = array_values ($x);
         $this->x = array_merge ($this->x, array_values ($x));
         $this->rehash = TRUE;
     }
