@@ -74,10 +74,10 @@ class scalarFactory {
     const yearLengthDays = 365;
 
     static function _getNowBp () {
-        return scalarFactory::yearsWBp - (date ('Y') + 0.0);
+        return self::_getAdBp(date ('Y')) + 0.00;
     }
     static function _getAdBp ($yearsAd) {
-        return scalarFactory::yearsWBp - $yearsAd;
+        return ($yearsAd - scalarFactory::yearsWBp) * -1.00;
     }
     static function secsPerYear () {
         return scalarFactory::yearLengthDays * scalarFactory::secsPerDay();

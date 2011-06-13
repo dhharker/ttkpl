@@ -92,7 +92,7 @@ class palaeoTime extends facet {
     }
 
     public function distanceTo (facet $to) {
-        return (is_a ($to, 'palaeoTime')) ? cal::dif($to->getYearsBp (), $this->getYearsBp ()) : FALSE;
+        return (is_a ($to, 'palaeoTime')) ? cal::dif ($to->getYearsBp (), $this->getYearsBp ()) : FALSE;
     }
 
     public function init ($yearsBp = NULL, dataSet &$ds = NULL) {
