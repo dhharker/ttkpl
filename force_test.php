@@ -4,7 +4,7 @@
 
 /**
  * Creates CSV output file illustrating the difference between thermal age in buried and unburied
- * samples up to 2000 years b.p. in northern England.
+ * samples from 2011 to 100 years b.p. in northern England.
  * 
  */
 
