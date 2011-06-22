@@ -29,6 +29,8 @@ class palaeoTime extends facet {
             $this->timeScalar = scalarFactory::makeYearsBp ($yearsBp, $ds);
         elseif (is_object ($yearsBp) && is_a ($yearsBp, 'scalar'))
             $this->timeScalar = clone ($yearsBp);
+        elseif ($yearsBp !== NULL && is_numeric($yearsBp))
+            $this->timeScalar->setValue ($yearsBp);
         else
             return FALSE;
         return TRUE;
