@@ -32,7 +32,7 @@ class scalar implements scalarInterface {
     }
     public function setValue ($value) {
 
-        if (is_object ($value) && in_array ($this->intName, array_keys ($value->conversions))) {
+        if (is_a ($value, 'scalar') && in_array ($this->intName, array_keys ($value->conversions))) {
             $cf = $value->conversions[$this->intName];
             $value = $cf ($value->getValue());
         }
@@ -93,7 +93,7 @@ class scalarFactory {
         $s->unitsLong = "Years (of " . scalarFactory::yearLengthDays . " days) before present (" . scalarFactory::yearsWBp . ")";
         $s->unitsShort = "yrs. b.p.";
         $s->validationFunction = function ($v) {
-            $min = scalarFactory::yearsWBp - (date ('Y') + 0.0);
+            $min = scalarFactory::_getNowBp ();
             return (is_numeric ($v) && $v >= $min) ? TRUE : FALSE;
         };
         /*$s->conversions['YEARS_'] = function ($c) {
