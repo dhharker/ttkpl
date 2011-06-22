@@ -415,7 +415,7 @@ class temporothermal {
     }
     function _updateRange () {
         $this->rangeYrs = $this->startDate->distanceTo ($this->stopDate);
-
+        //echo (print_r (array ($this->startDate, $this->stopDate), TRUE));
     }
 
     // bintanja
