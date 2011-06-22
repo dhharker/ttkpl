@@ -11,7 +11,8 @@ class palaeoTime extends facet {
 
 
     public $timeScalar = NULL;
-
+    public $datasource = NULL;
+    
     function getYearsBp () {
         return $this->timeScalar->getValue ();
     }
@@ -36,7 +37,12 @@ class palaeoTime extends facet {
         return TRUE;
     }
     public function __construct ($yearsBp = NULL, dataSet &$ds = NULL) {
-        return $this->init ($yearsBp, $ds);
+        $succ = $this->init ($yearsBp, $ds);
+        if ($succ) {
+            $this->datasource = $ds;
+            return TRUE;
+        }
+        return FALSE;
     }
 
     //internal
