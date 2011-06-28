@@ -79,7 +79,7 @@ class ttkplPlot {
         return $this;
     }
 
-    function plot ($filename = 'untitled_drrc_plot.png') {
+    function plot ($filename = 'untitled_ttkpl_plot.png') {
         $this->gp->set ("autoscale");
         foreach ($this->gridAxes as $g)
             $this->gp->set ("grid $g");
@@ -104,7 +104,8 @@ class ttkplPlot {
         $this->gp->export($filename);
 
         $this->gp->close();
-        
+
+        return true;
     }
 
 }
