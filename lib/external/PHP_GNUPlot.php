@@ -74,13 +74,13 @@ class PGData {
         
     }
     
-    function dumpIntoFile( $filename='' ) {
+    function dumpIntoFile( $filename=FALSE ) {
         
         if ($this->filename) { print "Error: Data file exists [ $this->filename ] !\n"; return; }
         global $tempDir, $IDCounter;
         if (!$filename) {
             // generate a file name
-            $filename = 'data_'. ( $IDCounter++ ) .'.txt';
+            $filename = $tempDir . 'data_'. ( $IDCounter++ ) .'.txt';
             global $toRemove;
             $toRemove[] = $filename;
         }
@@ -88,6 +88,7 @@ class PGData {
         foreach( $this->DataList as $entry ) fwrite($fp, implode("\t", $entry)."\n");
         fclose($fp);
         $this->filename = $filename; // no longer changeable
+        echo $this->filename ."\n";
     }
 }
 
