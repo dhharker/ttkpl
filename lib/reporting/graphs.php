@@ -40,6 +40,7 @@ class ttkplPlot {
                 if (!in_array ($axis, $this->axes))
                     $this->axes[] = $axis;
             }
+        return $this;
     }
 
     function setData ($title="Untitled series", $ds = 0, $axes = 'x1y1', $pt = 'lines', $cols = '1:2', $extra='') {
@@ -48,6 +49,7 @@ class ttkplPlot {
         $this->plotTypes[$ds] = $pt;
         $this->plotCols[$ds] = $cols;
         $this->plotExtra[$ds] = $extra;
+        return $this;
     }
 
     function addData ($x, $y, $ds = 0) {
@@ -55,10 +57,12 @@ class ttkplPlot {
             return FALSE;
 
         $this->d[$ds]->addDataEntry (array ($x, $y));
+        return $this;
     }
     function addDataAssoc ($d, $ds = 0) {
         foreach ((array) $d as $x => $y)
             $this->d[$ds]->addDataEntry ((is_array ($y)) ? $y : array ($x, $y));
+        return $this;
     }
     function sada ($d, $t, $axes = 'x1y1', $pt = 'lines', $cols = '1:2', $extra='', $ds = -1) {
         $ds = ($ds == -1) ? count ($this->d) : $ds;
@@ -68,9 +72,11 @@ class ttkplPlot {
     }
     function setLog ($axes) {
         $this->logAxes = array_merge ($this->logAxes, (array) $axes);
+        return $this;
     }
     function setGrid ($axes) {
         $this->gridAxes = array_merge ($this->gridAxes, (array) $axes);
+        return $this;
     }
 
     function plot ($filename = 'untitled_drrc_plot.png') {
@@ -98,6 +104,7 @@ class ttkplPlot {
         $this->gp->export($filename);
 
         $this->gp->close();
+        
     }
 
 }
