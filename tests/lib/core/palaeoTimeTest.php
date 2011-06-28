@@ -20,7 +20,7 @@ class palaeoTimeTest extends PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new palaeoTime;
+        $this->object = new palaeoTime (1000);
     }
 
     /**
@@ -35,20 +35,25 @@ class palaeoTimeTest extends PHPUnit_Framework_TestCase {
      * @todo Implement testGetYearsBp().
      */
     public function testGetYearsBp() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $years = array (-9919,-101,-1,-0,0.00,1,100);
+        echo $this->object->setYearsBp(777) . "\n";
+        echo $this->object->setYearsBp(777) . "\n";
+        
+        foreach ($years as $ybp) {
+            echo $this->object->setYearsBp($ybp) . "<\n";
+            $this->assertEquals ($ybp, $this->object->getYearsBp(), "YBP in != YBP out");
+        }
     }
 
     /**
      * @todo Implement testSetYearsBp().
      */
     public function testSetYearsBp() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $years = array (-100,-1,-0,0.00,1,100);
+        foreach ($years as $ybp) {
+            $this->object->setYearsBp($ybp);
+            //print_r ($this->object->timeScalar);
+        }
     }
 
     /**

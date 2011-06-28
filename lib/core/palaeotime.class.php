@@ -17,8 +17,8 @@ class palaeoTime extends facet {
         return $this->timeScalar->getValue ();
     }
     function setYearsBp ($ybp) {
-        $this->init ($ybp);
-        return $this->timeScalar->setValue ($ybp);
+        return $this->init ($ybp);
+        //return $this->timeScalar->setValue ($ybp);
     }
 
     public function distanceTo (facet $to) {
@@ -26,14 +26,14 @@ class palaeoTime extends facet {
     }
 
     public function init ($yearsBp = NULL, dataSet &$ds = NULL) {
-        if (!is_object ($this->timeScalar) || !is_a ($this->timeScalar, 'scalar'))
-            $this->timeScalar = scalarFactory::makeYearsBp ($yearsBp, $ds);
+        if (!is_a ($this->timeScalar, 'scalar'))
+            return $this->timeScalar = scalarFactory::makeYearsBp ($yearsBp, $ds);
         elseif (is_object ($yearsBp) && is_a ($yearsBp, 'scalar'))
             $this->timeScalar = clone ($yearsBp);
-        elseif ($yearsBp !== NULL && is_numeric($yearsBp))
-            $this->timeScalar->setValue ($yearsBp);
+        elseif ($yearsBp !== NULL)
+            return $this->timeScalar->setValue ($yearsBp + 0.00);
         else
-            return FALSE;
+            return -345;
         return TRUE;
     }
     public function __construct ($yearsBp = NULL, dataSet &$ds = NULL) {

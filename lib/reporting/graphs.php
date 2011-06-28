@@ -4,7 +4,7 @@
  */
 
 
-class drrcPlot {
+class ttkplPlot {
 
     public $gp = NULL;
     public $d = NULL;

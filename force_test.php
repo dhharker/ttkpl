@@ -10,6 +10,16 @@
 
 include 'lib/ttkpl.php';
 
+
+$pt = new palaeoTime(1000);
+echo $pt->getYearsBp() . ":";
+$pt->setYearsBp(999);
+echo $pt->getYearsBp() . ":";
+$pt->setYearsBp(888);
+echo $pt->getYearsBp() . "\n";
+
+exit (1);
+
 $depurination = new kinetics (126940, 17745329175.856213, "DNA depurination (bone)");
 $temps = new temperatures ();
 $location = new latLon (51, -1);

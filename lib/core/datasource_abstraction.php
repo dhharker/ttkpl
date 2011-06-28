@@ -79,7 +79,7 @@ class datum extends taUtils {
         if ($in === NULL) {
             $in = $this->getValue ();
         }
-        if (is_object ($in) && get_class ($in) == 'scalar')
+        if (is_object ($in) && is_a ($in, 'scalar'))
             return $in;
         elseif ((is_object ($in) && isset ($in->value)))
             return $this->getScalar ($in->value);

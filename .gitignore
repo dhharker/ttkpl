@@ -1,0 +1,7 @@
+tmp/**
+tmp/*
+data/*
+data/**
+*.log
+*~
+nbproject/*
