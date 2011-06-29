@@ -11,6 +11,17 @@
 include 'lib/ttkpl.php';
 
 
+$anom = 
+
+$climate = new sine();
+$climate->setGenericSine(
+        scalarFactory::makeCentigradeAbs(10),
+        scalarFactory::makeKelvinAnomaly(12),
+        scalarFactory::makeDays(0)
+        );
+
+exit (1);
+
 $pt = new palaeoTime(1000);
 echo $pt->getYearsBp() . ":";
 $pt->setYearsBp(999);

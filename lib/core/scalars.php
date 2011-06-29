@@ -51,9 +51,13 @@ class scalar implements scalarInterface {
     }
     public function setValue ($value) {
 
-        if (is_a ($value, 'scalar') && in_array ($this->intName, array_keys ($value->conversions))) {
+        if (is_a ($value, 'scalar') && (in_array ($this->intName, array_keys ($value->conversions)))) {
             $cf = $value->conversions[$this->intName];
             $value = $cf ($value->getValue());
+        }
+        elseif (is_a ($value, 'scalar') && ($this->intName == $value->intName)) {
+            // messed up =)
+            $value = $value->value;
         }
 
         return ($this->validateValue ($value) == TRUE) ? $this->value = $value : FALSE;
