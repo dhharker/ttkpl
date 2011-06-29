@@ -30,7 +30,7 @@
 
 class ttkplPlot {
 
-    public $gp = NULL;
+    public $gp = NULL; // GNUPlot object
     public $d = NULL;
     public $da = array ();
     public $axes = array ('x', 'y');
@@ -102,7 +102,10 @@ class ttkplPlot {
         $this->gridAxes = array_merge ($this->gridAxes, (array) $axes);
         return $this;
     }
-
+    function set ($toSet) {
+        $this->gp->set($toSet);
+        return $this;
+    }
     function plot ($filename = 'untitled_ttkpl_plot.png') {
         $this->gp->set ("autoscale");
         foreach ($this->gridAxes as $g)
