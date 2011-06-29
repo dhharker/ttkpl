@@ -31,7 +31,7 @@
 //$GNUPLOT = 'C:\gnuplot\bin\pgnuplot.exe'; // for Windows
  $GNUPLOT = "gnuplot";  // for linux
 
-$tempDir = './'; // somewhere we can store the temporary data files
+//$tempDir = './'; // somewhere we can store the temporary data files
 
 // DONT change the code below if you dont know what you are doing
 $IDCounter = 0;
@@ -79,15 +79,15 @@ class PGData {
     }
     
     function dumpIntoFile( $filename=FALSE ) {
-        
-        if ($this->filename) { print "Error: Data file exists [ $this->filename ] !\n"; return; }
+        // Modified to work properly in context by David Harker, Jun 2011
+//        if ($this->filename) { print "Error: Data file exists [ $this->filename ] !\n"; return; }
         global $tempDir, $IDCounter;
-        if (!$filename) {
+//        if (!$filename) {
             // generate a file name
             $filename = $tempDir . 'data_'. ( $IDCounter++ ) .'.txt';
             global $toRemove;
             $toRemove[] = $filename;
-        }
+//        }
         $fp = fopen($filename, 'w');
         foreach( $this->DataList as $entry ) fwrite($fp, implode("\t", $entry)."\n");
         fclose($fp);
