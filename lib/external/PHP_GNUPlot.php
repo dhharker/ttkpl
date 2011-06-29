@@ -20,6 +20,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
  *
+ *
+ *
+ * Minor modifications by David Harker Jun 2011 for better compatibility with TTKPL.
+ * Licenesed as above.
  **/
 
 
