@@ -56,7 +56,7 @@ class scalar implements scalarInterface {
             $value = $cf ($value->getValue());
         }
         elseif (is_a ($value, 'scalar') && ($this->intName == $value->intName)) {
-            // messed up =)
+            // messed /up/! =)
             $value = $value->value;
         }
 
