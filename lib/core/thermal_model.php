@@ -289,7 +289,7 @@ class temporothermal {
     public $temperatures; // object with data access and stuff
     private $date; // contains the palaeotime from which interped sine values are pulled
     private $wsSine; // working start sine (e.g. global temps)
-    public $intermediateSines = array ();
+    public $intermediateSines = array (); // contains sines as each correction is applied
 
     function __construct () {
 
@@ -345,6 +345,12 @@ class temporothermal {
             $this->gtc = $this->temperatures->getGlobalMeanAnomalyAt ($d)->getScalar ();
             $this->setSineFromGlobal ($this->gtc);
         }
+    }
+    function getSineFromGlobal (scalar $ganom) {
+        if ($this->setSineFromGlobal($ganom) !== FALSE) {
+            return $this->wsSine;
+        }
+        return FALSE;
     }
     function setSineFromGlobal (scalar $ganom) {
         if ($this->constantClimate == TRUE)
