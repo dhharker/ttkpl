@@ -261,7 +261,7 @@ class GNUPlot {
         flush($this->ph);
         pclose($this->ph);
         //sleep(count($this->toRemove) ); // allow gnu plot to finish so that we can safely remove the data files
-        //foreach($this->toRemove as $filename) unlink($filename);
+        foreach($this->toRemove as $filename) unlink($filename);
     }
 
     function exe( $command ) {
