@@ -106,15 +106,17 @@ class burial extends wuno {
 
             foreach ($this->thermalLayers as $li => $tl) {
                 $nAmp = $wksn->A0 * exp (-$tl->z->getValue() / self::dampingDepth ($tl->Dh));
-                $nOff = -($tl->z->getValue() / self::dampingDepth ($tl->Dh)) - 2/pi();
+                $nOff = $wksn->minOffset + ((($tl->z->getValue()*365)/self::dampingDepth ($tl->Dh))/(2*pi()));
                 //$nasc = scalarFactory::makeKelvinAnomaly ($nAmp);
                 $newAmp = clone $wksn->parentValues['amplitude'];
                 $newAmp->desc = "Buffered amplitude";
                 $newAmp->setScalar ($nAmp * 2);
+
                 $newOff = clone $wksn->parentValues['minOffset'];
                 $newOff->desc = "Buffered phase offset (lag)";
                 $newOff->setScalar ($nOff);
-
+                print_r($newOff->getValue()->getValue() . "\n");
+                //echo ("new offset: " . $nOff . "\n");
                 $newSine = clone $wksn;
                 $newSine->parentValues['amplitude'] = array ($wksn->parentValues['amplitude'], $tl);
                 $newSine->desc = "Thermally buffered temperature sine (layer " . $li+1 . ")";
