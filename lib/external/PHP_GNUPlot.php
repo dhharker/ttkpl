@@ -92,7 +92,7 @@ class PGData {
         foreach( $this->DataList as $entry ) fwrite($fp, implode("\t", $entry)."\n");
         fclose($fp);
         $this->filename = $filename; // no longer changeable
-        echo $this->filename ."\n";
+
     }
 }
 
