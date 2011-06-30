@@ -85,6 +85,14 @@ class sine extends wuno {
         $r = $this->Ta + $this->A0 * sin ((2 * pi() * ($offset - $this->minOffset)) / $this->period - (0.5*pi()));
         return scalarFactory::makeKelvin($r);
     }
+    /**
+     * @todo refactor to use scalar everywhere that it's appropriate. 
+     * @param int 1 >= offset <= sine::period
+     * @return scalar
+     */
+    public function getValueScalar ($offset) {
+        return scalarFactory::makeKelvin($this->getValue ($offset));
+    }
 
     function __toString () {
         return "{$this->Ta}+/-{$this->A0}";
