@@ -82,7 +82,7 @@ class sine extends wuno {
     public function getValue ($offset = 0) {
         // (-1 because period is 1 based, offset is 0 based)
         $offset %= $this->period - 1;
-        return $this->Ta + $this->A0 * sin ((2 * pi() * ($offset - $this->minOffset)) / $this->period );
+        return $this->Ta + $this->A0 * sin ((2 * pi() * ($offset - $this->minOffset)) / $this->period - (0.5*pi()));
     }
     function __toString () {
         return "{$this->Ta}+/-{$this->A0}";
@@ -107,7 +107,7 @@ class burial extends wuno {
             foreach ($this->thermalLayers as $li => $tl) {
                 $nAmp = $wksn->A0 * exp (-$tl->z->getValue() / self::dampingDepth ($tl->Dh));
                 $nOff = $wksn->minOffset + ((($tl->z->getValue()*365)/self::dampingDepth ($tl->Dh))/(2*pi()));
-                //$nasc = scalarFactory::makeKelvinAnomaly ($nAmp);
+                
                 $newAmp = clone $wksn->parentValues['amplitude'];
                 $newAmp->desc = "Buffered amplitude";
                 $newAmp->setScalar ($nAmp * 2);
@@ -115,8 +115,7 @@ class burial extends wuno {
                 $newOff = clone $wksn->parentValues['minOffset'];
                 $newOff->desc = "Buffered phase offset (lag)";
                 $newOff->setScalar ($nOff);
-                print_r($newOff->getValue()->getValue() . "\n");
-                //echo ("new offset: " . $nOff . "\n");
+
                 $newSine = clone $wksn;
                 $newSine->parentValues['amplitude'] = array ($wksn->parentValues['amplitude'], $tl);
                 $newSine->desc = "Thermally buffered temperature sine (layer " . $li+1 . ")";
@@ -397,7 +396,7 @@ class temporothermal {
     function setChunkSize ($chYears) {
         $this->chunkSize = $chYears;
     }
-    function autoChunkSize ($l = 1, $u = 50) {
+    function autoChunkSize ($l = 1, $u = 1000) {
         return 1;
         $a = $this->rangeYrs;
         // $a / ~500 seems a good value for final results
