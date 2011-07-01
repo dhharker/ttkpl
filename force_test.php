@@ -11,7 +11,18 @@
 include 'lib/ttkpl.php';
 
 
-$anom = 
+
+$climate = new sine();
+$climate->setGenericSine(
+        scalarFactory::makeCentigradeAbs(10),
+        scalarFactory::makeKelvinAnomaly(0.341),
+        scalarFactory::makeDays(0)
+        );
+
+echo "\n$climate\n";
+
+
+exit (1);
 
 $climate = new sine();
 $climate->setGenericSine(
