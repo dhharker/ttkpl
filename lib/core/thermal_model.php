@@ -94,7 +94,9 @@ class sine extends wuno {
     }
 
     function __toString () {
-        return "{$this->Ta}+/-{$this->A0}";
+        return sprintf ("%.0f±%.2f°C",
+                $this->Ta + scalarFactory::kelvinOffset,
+                $this->A0);
     }
 }
 class burial extends wuno {
