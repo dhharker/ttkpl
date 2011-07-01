@@ -20,6 +20,14 @@ $climate->setGenericSine(
         );
 
 echo "\n$climate\n";
+$climate = new sine();
+$climate->setGenericSine(
+        scalarFactory::makeCentigradeAbs(10),
+        scalarFactory::makeKelvinAnomaly(22.341),
+        scalarFactory::makeDays(0)
+        );
+
+echo "\n$climate\n";
 
 
 exit (1);
