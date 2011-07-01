@@ -94,7 +94,7 @@ class sine extends wuno {
     }
 
     function __toString () {
-        return sprintf ("%.0f±%0.2f°C",
+        return sprintf ("%0.1f±%0.1f°C",
                 $this->Ta + scalarFactory::kelvinOffset,
                 $this->A0);
     }
