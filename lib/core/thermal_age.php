@@ -43,7 +43,10 @@ class thermalAge {
         $this->kinetics = $k;
         $this->rehash = TRUE;
     }
-
+    /**
+     * @todo this should probably return a scalar, though there's plenty of refactoring to be done for that yet
+     * @return int years bp
+     */
     public function getAge () {
         $yrs = 0;
         if (count ($this->temporothermals) == 0)
