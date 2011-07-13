@@ -118,6 +118,7 @@ class burial extends wuno {
             foreach ($this->thermalLayers as $li => $tl) {
                 $nAmp = $wksn->A0 * exp (-$tl->z->getValue() / self::dampingDepth ($tl->Dh));
                 $nOff = $wksn->minOffset + ((($tl->z->getValue()*365)/self::dampingDepth ($tl->Dh))/(2*pi()));
+                // or $nOff = $wksn->minOffset + ((($tl->z->getValue()*365)/self::dampingDepth ($tl->Dh)*2*pi()));
                 
                 $newAmp = clone $wksn->parentValues['amplitude'];
                 $newAmp->desc = "Buffered amplitude";
