@@ -1,4 +1,5 @@
-<?php
+<?php namespace ttkpl;
+
 
 /*
 * Copyright 2008-2011 David Harker
