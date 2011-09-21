@@ -163,7 +163,7 @@ class datum extends taUtils {
 
 }
 
-class csvData implements Iterator {
+class csvData implements \Iterator {
 
     public $filename = NULL;
     public $data = array ();
