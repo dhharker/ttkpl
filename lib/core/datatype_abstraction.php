@@ -52,7 +52,7 @@ class latLon extends facet {
     }
 
     public function distanceTo (facet $to) {
-        return (get_class ($to) == 'latLon') ? self::haversine ($this, $to) : FALSE;
+        return (is_a ($to, '\ttkpl\latLon')) ? self::haversine ($this, $to) : FALSE;
     }
 
 
