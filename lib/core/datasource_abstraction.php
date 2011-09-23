@@ -179,10 +179,10 @@ class csvData implements \Iterator {
         $this->titlesRow1 = ($tr1) ? TRUE : FALSE;
         $this->filename = $filename;
         $csv = FALSE;
-        if (!file_exists ($filename))
-            throw new exception ("Couldn't find file: " . $filename);
+        if (!\file_exists ($filename))
+            throw new \exception ("Couldn't find file: " . $filename);
         elseif (!$fh = fopen ($filename, 'r'))
-            throw new exception ("Couldn't open " . $filename);
+            throw new \exception ("Couldn't open " . $filename);
         else {
 
             while (($row = fgetcsv ($fh)) !== FALSE) {
