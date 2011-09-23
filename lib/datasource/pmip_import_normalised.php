@@ -54,7 +54,7 @@ class pmip extends dataSet {
     }
     
     function getNearestRealFacets (facet $facet) {
-        if (get_class ($facet) != 'latLon')
+        if (!is_object ($facet) || !is_a ($facet, '\ttkpl\latLon'))
             return FALSE;
         
         $lat = $facet->getLat ();

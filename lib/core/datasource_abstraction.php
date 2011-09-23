@@ -50,7 +50,7 @@ abstract class dataSet extends taUtils implements dataSetInterface {
         return scalarFactory::makeAU ($a, $b);
     }
 
-    function getInterpolatedValueFromFacet (facet $facet) {
+    function getInterpolatedValueFromFacet (\ttkpl\facet $facet) {
 
         if ($this->isRealFacet ($facet))
             return $this->getRealValueFromFacet ($facet);
