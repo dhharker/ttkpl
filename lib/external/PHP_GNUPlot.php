@@ -1,4 +1,4 @@
-<?php
+<?php namespace ttkpl;
 
 /**
  * A PHP Interface to GNU Plot
