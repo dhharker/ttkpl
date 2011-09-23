@@ -51,7 +51,6 @@ abstract class dataSet extends taUtils implements dataSetInterface {
     }
 
     function getInterpolatedValueFromFacet (\ttkpl\facet $facet) {
-
         if ($this->isRealFacet ($facet))
             return $this->getRealValueFromFacet ($facet);
 
