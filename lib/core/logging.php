@@ -29,7 +29,7 @@
 
 if (!function_exists('log_message')) {
     function log_message ($a, $b) {
-        //echo "$a $b\n";
+        echo "$a $b\n";
     }
 }
 
