@@ -76,7 +76,7 @@ class latLon extends facet {
     }
     static function _bootstrap ($arrArg) {
         $o = new latLon ();
-        if (is_object ($arrArg) && get_class ($arrArg) == '\ttkpl\latLon')
+        if (is_object ($arrArg) && is_a ($arrArg, '\ttkpl\latLon'))
             return $arrArg;
         return @(($o->setLatLon ($arrArg['lat'], $arrArg['lon'])) || ($o->setLatLon ($arrArg[0], $arrArg[1])) || ($o->setLatLon ($arrArg[1], $arrArg[0]))) ? $o : FALSE;
     }
