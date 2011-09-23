@@ -82,7 +82,7 @@ class pmip extends dataSet {
         
     }
     
-    function getRealValueFromFacet ($facet) {
+    function getRealValueFromFacet (facet $facet) {
         $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
         
         $scr = scalarFactory::makeKelvin ($this->importer->_getMaxMin ($temps, $this->varname), $this);
