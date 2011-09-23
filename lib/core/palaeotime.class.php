@@ -43,13 +43,13 @@ class palaeoTime extends facet {
     }
 
     public function distanceTo (facet $to) {
-        return (is_a ($to, 'palaeoTime')) ? cal::dif ($to->getYearsBp (), $this->getYearsBp ()) : FALSE;
+        return (is_a ($to, '\ttkpl\palaeoTime')) ? cal::dif ($to->getYearsBp (), $this->getYearsBp ()) : FALSE;
     }
 
     public function init ($yearsBp = NULL, dataSet &$ds = NULL) {
-        if (!is_a ($this->timeScalar, 'scalar'))
+        if (!is_a ($this->timeScalar, '\ttkpl\scalar'))
             return $this->timeScalar = scalarFactory::makeYearsBp ($yearsBp, $ds);
-        elseif (is_object ($yearsBp) && is_a ($yearsBp, 'scalar'))
+        elseif (is_object ($yearsBp) && is_a ($yearsBp, '\ttkpl\scalar'))
             $this->timeScalar = clone ($yearsBp);
         elseif ($yearsBp !== NULL)
             return $this->timeScalar->setValue ($yearsBp + 0.00);

@@ -133,7 +133,7 @@ class MicroEnvironmentalRecord {
          * @return int years before 1950 represented by $when
          */
         function _when ($when) {
-            if (is_object ($when) && is_a ($when, 'palaeoTime'))
+            if (is_object ($when) && is_a ($when, '\ttkpl\palaeoTime'))
                 return $when->getYearsBp();
             elseif (is_numeric ($when) && $when !== FALSE && $pt = palaeoTime::bootStrap ($when) && $pt !== FALSE)
                 return $pt->getYearsBp();
