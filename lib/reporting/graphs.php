@@ -2,24 +2,24 @@
 
 /*
 * Copyright 2008-2011 David Harker
-*  
-* Licensed under the EUPL, Version 1.1 or – as soon they 
-  will be approved by the European Commission - subsequent  
-  versions of the EUPL (the "Licence"); 
-* You may not use this work except in compliance with the 
-  Licence. 
-* You may obtain a copy of the Licence at: 
-*  
+*
+* Licensed under the EUPL, Version 1.1 or – as soon they
+  will be approved by the European Commission - subsequent
+  versions of the EUPL (the "Licence");
+* You may not use this work except in compliance with the
+  Licence.
+* You may obtain a copy of the Licence at:
+*
 * http://ec.europa.eu/idabc/eupl
-*  
-* Unless required by applicable law or agreed to in 
-  writing, software distributed under the Licence is 
-  distributed on an "AS IS" basis, 
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
-  express or implied. 
-* See the Licence for the specific language governing 
-  permissions and limitations under the Licence. 
-*/ 
+*
+* Unless required by applicable law or agreed to in
+  writing, software distributed under the Licence is
+  distributed on an "AS IS" basis,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  express or implied.
+* See the Licence for the specific language governing
+  permissions and limitations under the Licence.
+*/
 
 
 /**
@@ -68,7 +68,7 @@ class ttkplPlot {
     }
 
     function setData ($title="Untitled series", $ds = 0, $axes = 'x1y1', $pt = 'lines', $cols = '1:2', $extra='') {
-        $this->d[$ds] = new PGData ($title);
+        $this->d[$ds] = new \ttkpl\PGData ($title);
         $this->da[$ds] = $axes;
         $this->plotTypes[$ds] = $pt;
         $this->plotCols[$ds] = $cols;
@@ -107,6 +107,8 @@ class ttkplPlot {
         return $this;
     }
     function plot ($filename = 'untitled_ttkpl_plot.png') {
+        echo "Plotting:\n";
+
         $this->gp->set ("autoscale");
         foreach ($this->gridAxes as $g)
             $this->gp->set ("grid $g");
@@ -123,8 +125,10 @@ class ttkplPlot {
         foreach ($this->axisLabels as $a => $l)
             $this->gp->setDimLabel ($a, $l);
 
-        foreach ($this->d as $di => $ds)
+        foreach ($this->d as $di => $ds) {
             $this->gp->plotData ($ds, $this->plotTypes[$di], $this->plotCols[$di], $this->da[$di]);
+echo "Legend: " . $ds->legend . "\n";
+        }
 
         $this->gp->set ("key left below");
         //$this->gp->set ("size ratio 0.5");

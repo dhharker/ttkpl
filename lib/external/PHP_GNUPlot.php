@@ -29,31 +29,32 @@
 
 // change this if u need
 //$GNUPLOT = 'C:\gnuplot\bin\pgnuplot.exe'; // for Windows
- $GNUPLOT = "gnuplot";  // for linux
-
-//$tempDir = './'; // somewhere we can store the temporary data files
+ $GNUPLOT = "gnuplot";/* > " . TMP . 'jobrun/plotlog.log 2>&1';  // for linux
+echo "Gnuplot with $GNUPLOT\n";*/
+$tempDir = TMP;//'./'; // somewhere we can store the temporary data files
 
 // DONT change the code below if you dont know what you are doing
 $IDCounter = 0;
 
 /**
  * PGData is a general data unit for series plotting
- * 
+ *
  * It can either be created from an external data file ( in this case, it is simply a wrapper to the file )
  * or created with an empty list of entries ( You can append entries to the list ).
- * 
+ *
  * Before it is plotted, if it is created in the 2nd way, it must have its data dumped into a file.
  *
  **/
- 
+
 class PGData {
     // privaite variables
     var $filename; // Name of the data file. Can be explicitly specified or automatically generated
     var $DataList; // This is only useful when $filename is not specified
     var $legend; // Title of the data you want to see on the graph
 
-    function PGData($legend = '') {
+    function __construct ($legend = '') {
         $this->legend = $legend;
+
     }
 
     /**
@@ -71,20 +72,20 @@ class PGData {
     }
 
     function changeLegend( $legend ) { $this->legend = $legend; }
-    
+
     function addDataEntry( $entry ){
         if (@!$filename) $this->DataList[] = $entry;
         else print "Error: Cannot add an entry into file content [ $this->filename ] !\n";
-        
+
     }
-    
+
     function dumpIntoFile( $filename=FALSE ) {
         // Modified to work properly in context by David Harker, Jun 2011
 //        if ($this->filename) { print "Error: Data file exists [ $this->filename ] !\n"; return; }
         global $tempDir, $IDCounter;
 //        if (!$filename) {
             // generate a file name
-            $filename = $tempDir . 'data_'. ( $IDCounter++ ) .'.txt';
+            $filename = $tempDir . '/data_'. ( ++$IDCounter ) .'.txt';
             global $toRemove;
             $toRemove[] = $filename;
 //        }
@@ -99,7 +100,7 @@ class PGData {
 /**
  * The main class to communicate with GNU Plot
  * It opens a pipe to a GNU Plot process
- * 
+ *
  * You can guess the idea from the names of the functions
  * Some of the parameters are explained in the comments
  **/
@@ -112,12 +113,13 @@ class GNUPlot {
     var $plot;
     var $splot;
 
-    function GNUPlot() {
+    function __construct () {
         global $GNUPLOT;
-        $this->ph = popen($GNUPLOT, 'w');
+        $this->ph = null;//popen($GNUPLOT, 'w');
         $this->toRemove = array();
         $this->plot = 'plot';
         $this->splot = 'splot';
+        $this->savedPlot = '';
     }
 
     // You can tell from the name of the function.
@@ -139,15 +141,15 @@ class GNUPlot {
        $this->exe( "set arrow from $x1,$y1,$z1 to $x2,$y2,$z2 head\n" );
     }
 
-    function set2DLabel($labeltext, $x, $y, $justify='', $pre='', $extra='' ) 
+    function set2DLabel($labeltext, $x, $y, $justify='', $pre='', $extra='' )
     {
         // $justify =  {left | center | right}
         // $pre = { first|second|graph|screen }
 
         $this->exe( "set label \"". $labeltext ."\" at $pre $x,$y $extra\n");
     }
-    
-    function set3DLabel($labeltext, $x, $y, $z, $justify='', $pre='', $extra='' ) 
+
+    function set3DLabel($labeltext, $x, $y, $z, $justify='', $pre='', $extra='' )
     {
         // $justify =  {left | center | right}
         // $pre = { first|second|graph|screen }
@@ -167,6 +169,7 @@ class GNUPlot {
     }
 
     function setTitle( $title, $extra='' ) {
+echo "Set title: $title\n";
         $this->exe( "set title \"$title\" $extra\n");
     }
 
@@ -180,39 +183,39 @@ class GNUPlot {
         // $dimension = x, y, z ......
         $this->exe( "set ${dimension}tics $option \n" );
     }
-    
+
     function setSize( $x, $y, $extra='' ) {
         // $extra = {{no}square | ratio <r> | noratio}
-        $this->exe( "set size $extra $x,$y\n");    
+        $this->exe( "set size $extra $x,$y\n");
     }
 
     function plotData(  &$PGData, $method, $using, $axis='', $extra='' ) {
         /**
          * This function is for 2D plotting
          *
-         * $method is `lines`, `points`, `linespoints`, `impulses`, `dots`, `steps`, `fsteps`, 
-         *              `histeps`, errorbars, `xerrorbars`, `yerrorbars`, `xyerrorbars`, errorlines, 
-         *              `xerrorlines`, `yerrorlines`, `xyerrorlines`, `boxes`, `filledcurves`, 
-         *              `boxerrorbars`, `boxxyerrorbars`, `financebars`, `candlesticks`, `vectors` or pm3d 
+         * $method is `lines`, `points`, `linespoints`, `impulses`, `dots`, `steps`, `fsteps`,
+         *              `histeps`, errorbars, `xerrorbars`, `yerrorbars`, `xyerrorbars`, errorlines,
+         *              `xerrorlines`, `yerrorlines`, `xyerrorlines`, `boxes`, `filledcurves`,
+         *              `boxerrorbars`, `boxxyerrorbars`, `financebars`, `candlesticks`, `vectors` or pm3d
          *
          * $using is an expression controlling which data columns to use and how to use:
          *             Example : $using = " 1:2 " means plotting column 2 against column 1
          *                      $using = " ($1):($2/2)  " means use half of the value of column 2 to plot against column 1
          *            You can introduce in more than 2 or 3 columns to enable styles like errorbars
          **/
-        
+
         $plot = $this->plot;
         if (!$PGData->filename) $PGData->dumpIntoFile();
         if (!$PGData->filename) { print "Error: Empty dataset!\n"; return; }
 
         $fn = $PGData->filename;
         $title = $PGData->legend;
-
+//print_r ($PGData);
         if ($axis) $axis = " axis $axis ";
         $this->exe( "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n");
-        //print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
+print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
         $this->plot = 'replot';
-        
+
     }
 
     function splotData( &$PGData, $method, $using, $extra = '' ) {
@@ -229,7 +232,7 @@ class GNUPlot {
 
         $this->exe( "$splot '$fn' using $using title \"$title\" with $method $extra\n");
         $this->splot = 'replot';
-        
+
     }
 
     function export( $pic_filename ) {
@@ -237,7 +240,7 @@ class GNUPlot {
          * export to $pic_filename
          * the file ext can be png, ps or eps
          */
-         
+
         if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png size 1000,800\n");
         elseif (preg_match("/\.e?ps$/", $pic_filename)) $this->exe( "set term postscript\n");
         elseif (preg_match("/\.svg$/", $pic_filename)) $this->exe( "set term svg enhanced size 1000,800\n");
@@ -256,18 +259,29 @@ class GNUPlot {
         $this->plot = 'plot';
         $this->splot = 'splot';
     }
-    
+
     function close() {
-        flush($this->ph);
-        pclose($this->ph);
+        /*flush($this->ph);
+        pclose($this->ph);*/
         //sleep(count($this->toRemove) ); // allow gnu plot to finish so that we can safely remove the data files
         foreach($this->toRemove as $filename) unlink($filename);
+        echo "\n" . $this->savedPlot . "\n";
+        $this->burn();
     }
 
     function exe( $command ) {
-        fwrite($this->ph, $command);
+        $this->savedPlot .= $command;
+        //fwrite($this->ph, $command);
     }
-    
+    function burn ($nuke = false) {
+        global $tempDir;
+        $fn = $tempDir . '/plot';
+        file_put_contents($fn, $this->savedPlot);
+        if ($nuke == true)
+            $this->savedPlot = '';
+        return \system("gnuplot $fn");
+    }
+
 }
 
 
@@ -278,6 +292,6 @@ if (!function_exists('file_put_contents')) {
         fwrite($fp, $contents);
         fclose($fp);
     }
-} 
+}
 
 ?>
