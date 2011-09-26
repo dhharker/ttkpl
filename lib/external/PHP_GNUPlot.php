@@ -275,7 +275,7 @@ print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
     }
     function burn ($nuke = false) {
         global $tempDir;
-        $fn = $tempDir . '/plot';
+        $fn = $tempDir . 'plot';
         file_put_contents($fn, $this->savedPlot);
         if ($nuke == true)
             $this->savedPlot = '';
