@@ -126,7 +126,7 @@ class ttkplPlot {
             $this->gp->setDimLabel ($a, $l);
 
         foreach ($this->d as $di => $ds) {
-            $this->gp->plotData ($ds, $this->plotTypes[$di], $this->plotCols[$di], $this->da[$di]);
+            $this->gp->plotData ($ds, $this->plotTypes[$di], $this->plotCols[$di], $this->da[$di], $this->plotExtra[$di]);
 echo "Legend: " . $ds->legend . "\n";
         }
 
