@@ -41,13 +41,13 @@ class ttkplPlot {
     public $plotCols = array ();
     public $plotExtra = array ();
 
-    function __construct ($title) {
-        $this->_init ($title);
+    function __construct ($title, $xm = null, $ym = null) {
+        $this->_init ($title, $xm, $ym);
     }
 
-    function _init ($title) {
+    function _init ($title, $xm = null, $ym = null) {
         $this->gp = new GNUPlot ();
-        $this->gp->setSize( 1.0, 1.0 );
+        $this->gp->setSize(($xm==null)?1.0:$xm,($ym==null)?1.0:$ym);
         $this->gp->setTitle ($title);
     }
 
