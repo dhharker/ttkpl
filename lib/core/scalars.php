@@ -102,6 +102,9 @@ class scalarFactory {
     static function _getAdBp ($yearsAd) {
         return ($yearsAd - scalarFactory::yearsWBp) * -1.00;
     }
+    static function ad2bp ($yearsAd) {
+        return self::_getAdBp($yearsAd);
+    }
     static function secsPerYear () {
         return scalarFactory::yearLengthDays * scalarFactory::secsPerDay();
     }
@@ -276,8 +279,8 @@ class scalarFactory {
     static function makeThermalDiffusivity ($value, dataSet &$dataSet = NULL) {
         $s = new scalar ();
         $s->intName = "Dh";
-        $s->unitsLong = "Meters squared per second";
-        $s->unitsShort = "m^2 s^-1";
+        $s->unitsLong = "Millimetre squared per second";
+        $s->unitsShort = "mm^2 s^-1";
         $s->validationFunction = function ($v) {
             return (is_numeric ($v) == TRUE && $v > 0.0) ? TRUE : FALSE;
         };
