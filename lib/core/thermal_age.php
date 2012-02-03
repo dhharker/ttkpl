@@ -99,7 +99,10 @@ class thermalAge {
     }
     public function getTeffFromSine (sine $s) {
         for ($d = 1; $d <= $s->period; $d++) {
-            $sumR += $this->getRate ($s->getValue ($d));
+            $dt = $s->getValue ($d);
+            if (!is_a ($dt, 'scalar') && !empty ($dt) && $dt != 0 && \is_numeric($dt))
+                    $dt = scalarFactory::makeKelvin ($dt);
+            $sumR += $this->getRate ($dt);
             $sumD += 1;
         }
         $meanK = scalarFactory::makeMolesPerSecond ($sumR / $sumD);
