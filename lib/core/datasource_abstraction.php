@@ -303,19 +303,17 @@ abstract class csvTimeSeries extends dataSet {
     }*/
     function getInterpolatedValueFromFacet (facet $facet) {
         $points = $this->getNearestRealFacets ($facet);
+        
         if (count ($points) == 1) // || $this->isRealFacet ($facet))
             return $this->getRealValueFromFacet ($facet);
 
         $v = array (); $w = array ();
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
-            //echo "-$tmp-";
             $tmpv = $tmp->getScalar()->getValue();
             $v[] = $tmpv;
             $w[] = abs ($facet->distanceTo ($point));// + 1E-9;
         }
-        //print_r ($w);
-        //die ("\nw\n");
         $intVal = $this->invWeightedMean ($v, $w);
         $scr = scalarFactory::makeKelvinAnomaly ($intVal, $this);
         return new temporalDatum ($facet, $scr);

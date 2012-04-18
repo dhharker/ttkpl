@@ -86,8 +86,8 @@ class sine extends wuno {
     }
     /**
      * @todo refactor to use scalar everywhere that it's appropriate. 
-     * @param int 1 >= offset <= sine::period
-     * @return scalar
+     * @param int 1 <= offset <= sine::period
+     * @return scalar 
      */
     public function getValueScalar ($offset) {
         return scalarFactory::makeKelvin($this->getValue ($offset));
@@ -218,14 +218,16 @@ class temperatures {
             //print_r ($where);
             $localTemps[$ptc] = $this->getLocalMeanTempAt ($where, $ptc);
             $localAmps[$ptc] = $this->getLocalAmplitudeAt ($where, $ptc);
+            //$localOffs[$ptc] = $this->getLocalDayMinOffsetAt ($where, $ptc);
             $when = pmip::ptcToPalaeoTime ($ptc);
             // In degrees kelvin offset from northern hemisphere 40-80lat mean land surface temperature
             $globalTemps[$ptc] = $this->getGlobalMeanAnomalyAt ($when);
             $xyTemps['yT'][] = $localTemps[$ptc]->getScalar ()->getValue ();
             $xyTemps['yA'][] = $localAmps[$ptc]->getScalar ()->getValue ();
             $xyTemps['x'][] = $globalTemps[$ptc]->getScalar ()->getValue ();
+            $offset = (isset ($offset)) ? $offset : $this->getLocalDayMinOffsetAt ($where, $ptc);
         }
-
+        
 
         // How local mean temperature varies with global mean temperature
         $meanLR = new linearRegression ($xyTemps['x'], $xyTemps['yT']);
@@ -246,6 +248,7 @@ class temperatures {
         return array (
             'mean' => $meanCorrection,
             'amplitude' => $ampCorrection,
+            'offset' => $offset
         );
 
     }
@@ -280,7 +283,11 @@ class temperatures {
         $peakToPeakTemperatureAmplitude = datum::difference ($max, $min);
         return $peakToPeakTemperatureAmplitude;
     }
-
+    function getLocalDayMinOffsetAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
+        $dmin = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getDayMinOffsetFromFacet ($where);
+        //var_dump ($dmin); die("*");
+        return $dmin;
+    }
 
 }
 
@@ -381,7 +388,7 @@ class temporothermal {
                 $lm = $this->vegCorrection->correct ($lm);
 
             $la = $this->ampCorrection->correct ($ganom);
-            $newSine->setGenericSine ($lm, $la, 0);
+            $newSine->setGenericSine ($lm, $la, $this->initDayMinOffset);
             $this->intermediateSines[] = clone $newSine;
             $this->wsSine = $newSine;
         }
@@ -425,6 +432,8 @@ class temporothermal {
     function setLocalisingCorrections ($arrLC) {
         $this->meanCorrection = $arrLC['mean'];
         $this->ampCorrection = $arrLC['amplitude'];
+        $this->initDayMinOffset = (isset ($arrLC['offset'])) ? $arrLC['offset']->getValue()->getValue() : die();
+        
     }
     function setVegetationCover ($cover = FALSE, $known = FALSE) {
         /*
@@ -462,6 +471,10 @@ class temporothermal {
     function _updateRange () {
         $this->rangeYrs = $this->startDate->distanceTo ($this->stopDate);
         //echo (print_r (array ($this->startDate, $this->stopDate), TRUE));
+    }
+
+    function getWsSine () {
+        return $this->wsSine;
     }
 
     // bintanja

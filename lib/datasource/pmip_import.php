@@ -52,7 +52,8 @@ class PMIP2 {
         $temps = array ();
         foreach ($times as $t)
             foreach ($vars as $v)
-                $temps[$t.'a'][$v] = $this->_getMaxMin ($this->_extractTemps ($lat, $lon, $v, $t, self::MODEL_HADCM3M2), $v);
+                $temps[$t.'a'] = $this->_getMaxMin ($this->_extractTemps ($lat, $lon, $v, $t, self::MODEL_HADCM3M2), $v);
+                //$temps[$t.'a'][$v] = $this->_getMaxMin ($this->_extractTemps ($lat, $lon, $v, $t, self::MODEL_HADCM3M2), $v);
         return $temps;
         
     }
@@ -60,6 +61,16 @@ class PMIP2 {
     function _getMaxMin ($tempArr, $v = self::TMAX_VAR) {
         sort ($tempArr, SORT_NUMERIC);
         return ($v == self::TMAX_VAR) ? $tempArr[11] : $tempArr[0];
+    }
+    function _getDayMinOffset ($tempArr, $v = self::TMIN_VAR) {
+        $min = $this->_getMaxMin ($tempArr, $v);
+        $mmin = array_filter ($tempArr, function ($v) use (&$min) {
+            return ($v == $min);
+        });
+        $mmin = (count ($mmin) == 1 && $mmin = array_keys($mmin)) ? $mmin[0] : 0;
+        $dmin = round (((365/12) * ($mmin + 1)) + 365/24);
+        return $dmin;
+
     }
     
     function __construct () {

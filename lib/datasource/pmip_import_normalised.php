@@ -30,7 +30,7 @@ require_once ("pmip_import.php");
 
 class pmip extends dataSet {
     
-    private $importer = NULL;
+    public $importer = NULL;
     
     // These contain values of constants from the base PMIP2 importer class
     private $varname;
@@ -91,7 +91,17 @@ class pmip extends dataSet {
         $sd = new spatialDatum ($facet, $td);
         return $sd;
     }
-    
+    function getDayMinOffsetFromFacet (facet $facet) {
+        $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+
+        //$scr = scalarFactory::makeKelvin ($this->importer->_getMaxMin ($temps, $this->varname), $this);
+        $scr = scalarFactory::makeDays ($this->importer->_getDayMinOffset ($temps, $this->varname), $this);
+        // lower dimensional datum objects go closer to the scalar in the tree. why tree? don't know.
+        $td = new temporalDatum ($this->getPalaeoTime (), $scr);
+        $sd = new spatialDatum ($facet, $td);
+        return $sd;
+
+    }
     function getPalaeoTime ($timeName = NULL) {
         if ($timeName === NULL)
             $timeName = $this->timename;

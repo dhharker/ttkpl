@@ -41,14 +41,18 @@ class ttkplPlot {
     public $plotCols = array ();
     public $plotExtra = array ();
 
-    function __construct ($title, $xm = null, $ym = null) {
-        $this->_init ($title, $xm, $ym);
+    function __construct ($title, $xm = null, $ym = null, $pxSize = null) {
+        $this->_init ($title, $xm, $ym, $pxSize);
     }
 
-    function _init ($title, $xm = null, $ym = null) {
+    function _init ($title, $xm = null, $ym = null, $pxSize = null) {
         $this->gp = new GNUPlot ();
         $this->gp->setSize(($xm==null)?1.0:$xm,($ym==null)?1.0:$ym);
         $this->gp->setTitle ($title);
+        if ($pxSize === null) {
+            $pxSize = "1000,800";
+        }
+        $this->gp->pxSize = $pxSize;
     }
 
     function labelAxes ($xTitle='', $yTitle='', $x2Title='', $y2Title='') {
