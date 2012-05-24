@@ -133,7 +133,7 @@ class burial extends wuno {
                 $newSine->desc = "Thermally buffered temperature sine (layer " . $li+1 . ")";
                 $newSine->setSine ($newSine->parentValues['mean'], $newAmp, $newOff);
                 $wksn = $newSine;
-//     echo "intermediate ampl $li: " . $newAmp->getScalar()->getValue() / 2 . "\n";
+     echo "intermediate ampl $li: " . $newAmp->getScalar()->getValue() / 2 . "\n";
             }
             return $newSine;
         }

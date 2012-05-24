@@ -279,8 +279,8 @@ class scalarFactory {
     static function makeThermalDiffusivity ($value, dataSet &$dataSet = NULL) {
         $s = new scalar ();
         $s->intName = "Dh";
-        $s->unitsLong = "Millimetres squared per second";
-        $s->unitsShort = "mm^2 s^-1";
+        $s->unitsLong = "Metres squared per second";
+        $s->unitsShort = "m^2 s^-1";
         $s->validationFunction = function ($v) {
             return (is_numeric ($v) == TRUE && $v > 0.0) ? TRUE : FALSE;
         };
