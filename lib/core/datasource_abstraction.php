@@ -209,7 +209,8 @@ class csvData implements \Iterator {
     function export ($filename) {
         if (file_exists ($filename) && !unlink ($filename))
             throw new exception ("Couldn't remove existing output file: " . $filename . " (check permissions).");
-        elseif (!$fh = fopen ($filename, 'w'))
+        $fh = fopen ($filename, 'w');
+        if (!$fh)
             throw new exception ("Couldn't open " . $filename . " for writing.");
         else {
             if ($this->titlesRow1) {
@@ -221,7 +222,9 @@ class csvData implements \Iterator {
             } while ($this->next ());
             fclose ($fh);
             $this->rewind();
+            return true;
         }
+        return false;
     }
 
     function addColumn ($name) {
