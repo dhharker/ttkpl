@@ -140,8 +140,9 @@ class pmip extends dataSet {
     }
     
     function _isWN ($n) {
-        $n *= ($n < 0) ? -1 : 1;
-        return ($n + 0.0 == ((int) $n) + 0.0) ? FALSE : TRUE;
+        /*$n *= ($n < 0) ? -1 : 1;
+        return ($n + 0.0 == ((int) $n) + 0.0) ? FALSE : TRUE;*/
+        return (round (abs($n)) == abs($n)) ? true : false;
     }
     
 }
