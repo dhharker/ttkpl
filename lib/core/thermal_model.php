@@ -436,7 +436,7 @@ class temporothermal {
         $this->initDayMinOffset = (isset ($arrLC['offset'])) ? $arrLC['offset']->getValue()->getValue() : die();
         
     }
-    function setLocaion (\ttkpl\latLon $location) {
+    function setLocation (\ttkpl\latLon $location) {
         $this->location = $location;
     }
     function setVegetationCover ($cover = FALSE, $known = FALSE) {
