@@ -32,8 +32,8 @@ class thermalAge {
     public $kinetics;
     public $rehash = TRUE;
 
-    private $histograms = array ();
-    private $rates = array ();
+    public $histograms = array ();
+    public $rates = array ();
 
     public function addTemporothermal (temporothermal $tt) {
         $this->temporothermals[] = $tt;
