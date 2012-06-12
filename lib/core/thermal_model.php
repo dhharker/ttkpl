@@ -341,8 +341,7 @@ class temporothermal {
                 $this->twData['TGraph']['surface'][$years] = $surf;
                 $this->twData['TGraph']['buried'][$years] = $turf;
                 $this->twData['mean'][$years] = $this->wsSine->mean + scalarFactory::kelvinOffset;
-
-    //             $this->twData['amp'][$years] = $this->wsSine->amplitude;
+                $this->twData['amp'][$years] = $this->wsSine->amplitude;
             }
             if (isset ($this->gtc))
                 $this->twData['ganom'][$years] = $this->gtc->getValue();
