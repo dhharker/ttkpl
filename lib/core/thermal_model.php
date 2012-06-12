@@ -309,10 +309,11 @@ class temporothermal {
     public $constantClimate = FALSE;
     public $constantSine;
 
-    private $corrections = array (); // array of correction objects which get sequentially applied
+    public $corrections = array (); // array of correction objects which get sequentially applied
+    public $location = null; // latLon object locating site. currently for reference in reporting only.
     public $temperatures; // object with data access and stuff
-    private $date; // contains the palaeotime from which interped sine values are pulled
-    private $wsSine; // working start sine (e.g. global temps)
+    public $date; // contains the palaeotime from which interped sine values are pulled
+    public $wsSine; // working start sine (e.g. global temps)
     public $intermediateSines = array (); // contains sines as each correction is applied
 
     function __construct () {
@@ -434,6 +435,9 @@ class temporothermal {
         $this->ampCorrection = $arrLC['amplitude'];
         $this->initDayMinOffset = (isset ($arrLC['offset'])) ? $arrLC['offset']->getValue()->getValue() : die();
         
+    }
+    function setLocaion (\ttkpl\latLon $location) {
+        $this->location = $location;
     }
     function setVegetationCover ($cover = FALSE, $known = FALSE) {
         /*
