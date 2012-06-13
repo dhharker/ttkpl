@@ -327,6 +327,9 @@ class temporothermal {
     }
 
     function timeWalk ($numBins = -1, $xText = 0) {
+        
+        $graphTeff = true; // may cause significant performance hit
+
         $bpStart = $this->startDate->getYearsBp ();
         $bpStop = $this->stopDate->getYearsBp ();
         $tHist = new histogram ();
@@ -343,7 +346,7 @@ class temporothermal {
         if (isset ($this->intermediateSines[1])) {
             $this->twData['TGraph'] = array ();
         }
-        $graphTeff = true; // may cause significant performance hit
+        
         log_message ('debug', " * timeWalk: doing the timewalk:");
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
             $this->setDate (new palaeoTime ($years));
