@@ -365,7 +365,7 @@ class temporothermal {
             if ($graphTeff && $this->controllingThermalAge !== null) {
                 $tmpTeff = $this->controllingThermalAge->getTeffFromSine($this->wsSine);
                 $tC = $tmpTeff->getValue()  + scalarFactory::kelvinOffset;
-                log_message ('debug', "Teff @ $year is $tC");
+                log_message ('debug', "Teff @ $years is $tC");
                 $this->twData['teff'][$years] = $tC;
             }
 
