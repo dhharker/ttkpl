@@ -122,6 +122,7 @@ class burial extends wuno {
                 
                 $newAmp = clone $wksn->parentValues['amplitude'];
                 $newAmp->desc = "Buffered amplitude";
+                /* @TODO: This is a candidate to investigate as cause of the "too warm" bug */
                 $newAmp->setScalar ($nAmp * 2);
 
                 $newOff = clone $wksn->parentValues['minOffset'];
@@ -340,9 +341,11 @@ class temporothermal {
                 $turf = array ($years, $m + $as1, $m - $as1);
                 $this->twData['TGraph']['surface'][$years] = $surf;
                 $this->twData['TGraph']['buried'][$years] = $turf;
-                $this->twData['mean'][$years] = $this->wsSine->mean + scalarFactory::kelvinOffset;
-                $this->twData['amp'][$years] = $this->wsSine->amplitude;
             }
+
+            $this->twData['mean'][$years] = $this->wsSine->mean + scalarFactory::kelvinOffset;
+            $this->twData['amp'][$years] = $this->wsSine->amplitude;
+
             if (isset ($this->gtc))
                 $this->twData['ganom'][$years] = $this->gtc->getValue();
 
