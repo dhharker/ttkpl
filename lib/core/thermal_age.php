@@ -37,6 +37,7 @@ class thermalAge {
 
     public function addTemporothermal (temporothermal $tt) {
         $this->temporothermals[] = $tt;
+        $tt->setControllingThermalAge($this);
         $this->rehash = TRUE;
     }
     public function setKinetics (kinetics $k) {

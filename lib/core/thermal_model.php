@@ -317,14 +317,33 @@ class temporothermal {
     public $wsSine; // working start sine (e.g. global temps)
     public $intermediateSines = array (); // contains sines as each correction is applied
 
+    private $controllingThermalAge = null; // @TODO this properly: ref to thermalAge object pulling the strings to use getTeffFrom(histogram|sine) fns.
+    
     function __construct () {
 
     }
+    function setControllingThermalAge (\ttkpl\thermalAge $ta) {
+        $this->controllingThermalAge = $ta;
+    }
+
     function timeWalk ($numBins = -1, $xText = 0) {
         $bpStart = $this->startDate->getYearsBp ();
         $bpStop = $this->stopDate->getYearsBp ();
         $tHist = new histogram ();
-        $this->twData = array ();
+        $this->twData = array (
+            'mean' => array (),
+            'amp' => array (),
+        );
+        if ($graphTeff && $this->controllingThermalAge !== null) {
+            $this->twData['teff'] = array ();
+        }
+        elseif ($graphTeff) {
+            $graphTeff = false;
+        }
+        if (isset ($this->intermediateSines[1])) {
+            $this->twData['TGraph'] = array ();
+        }
+        $graphTeff = true; // may cause significant performance hit
         log_message ('debug', " * timeWalk: doing the timewalk:");
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
             $this->setDate (new palaeoTime ($years));
@@ -341,6 +360,11 @@ class temporothermal {
                 $turf = array ($years, $m + $as1, $m - $as1);
                 $this->twData['TGraph']['surface'][$years] = $surf;
                 $this->twData['TGraph']['buried'][$years] = $turf;
+            }
+
+            if ($graphTeff && $this->controllingThermalAge !== null) {
+                $tmpTeff = $this->controllingThermalAge->getTeffFromSine($this->wsSine);
+                $this->twData['teff'][$years] = $tmpTeff->getValue()  + scalarFactory::kelvinOffset;
             }
 
             $this->twData['mean'][$years] = $this->wsSine->mean + scalarFactory::kelvinOffset;
