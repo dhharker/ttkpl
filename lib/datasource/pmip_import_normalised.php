@@ -83,7 +83,9 @@ class pmip extends dataSet {
     }
     
     function getRealValueFromFacet (facet $facet) {
-        $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+        //$temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+        // this is a bit of a hack to force the use of the mean sine instead of max and min sines.
+        $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), PMIP2::TMEAN_VAR, $this->timename, PMIP2::MODEL_CCSM);
         
         $scr = scalarFactory::makeKelvin ($this->importer->_getMaxMin ($temps, $this->varname), $this);
         // lower dimensional datum objects go closer to the scalar in the tree. why tree? don't know.

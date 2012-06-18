@@ -39,8 +39,10 @@ class PMIP2 {
     const T_PRE_INDUSTRIAL_0KA = "0k";
     const TMIN_VAR = 'tasmin';
     const TMAX_VAR = 'tasmax';
+    const TMEAN_VAR = 'tas';
     const ALT_VAR = 'orog';
     const MODEL_HADCM3M2 = 'HadCM3M2';
+    const MODEL_CCSM = 'CCSM';
     const NETCDF_DATA_EXT = 'nc';
     const NETCDF_CTRL_EXT = 'ctrl';
     
@@ -51,9 +53,10 @@ class PMIP2 {
         $vars = array (self::TMAX_VAR, self::TMIN_VAR);
         $temps = array ();
         foreach ($times as $t)
-            foreach ($vars as $v)
+            foreach ($vars as $v) {
                 $temps[$t.'a'] = $this->_getMaxMin ($this->_extractTemps ($lat, $lon, $v, $t, self::MODEL_HADCM3M2), $v);
                 //$temps[$t.'a'][$v] = $this->_getMaxMin ($this->_extractTemps ($lat, $lon, $v, $t, self::MODEL_HADCM3M2), $v);
+            }
         return $temps;
         
     }

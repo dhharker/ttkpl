@@ -276,7 +276,6 @@ class temperatures {
         $mean = datum::mean (array ($min, $max));
         return $mean;
     }
-
     function getLocalAmplitudeAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
         $min = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getInterpolatedValueFromFacet ($where);
         $max = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMAX_VAR]->getInterpolatedValueFromFacet ($where);
@@ -284,6 +283,24 @@ class temperatures {
         $peakToPeakTemperatureAmplitude = datum::difference ($max, $min);
         return $peakToPeakTemperatureAmplitude;
     }
+    
+    
+    // These are the original functions renamed from getLocalMeanTempAt and getLocalAmplitudeAt - using max of max and min of min may have been skewing model...
+    function getExtremeLocalMeanTempAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
+        $min = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getInterpolatedValueFromFacet ($where);
+        $max = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMAX_VAR]->getInterpolatedValueFromFacet ($where);
+
+        $mean = datum::mean (array ($min, $max));
+        return $mean;
+    }
+    function getExtremeLocalAmplitudeAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
+        $min = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getInterpolatedValueFromFacet ($where);
+        $max = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMAX_VAR]->getInterpolatedValueFromFacet ($where);
+
+        $peakToPeakTemperatureAmplitude = datum::difference ($max, $min);
+        return $peakToPeakTemperatureAmplitude;
+    }
+
     function getLocalDayMinOffsetAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
         $dmin = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getDayMinOffsetFromFacet ($where);
         //var_dump ($dmin); die("*");
