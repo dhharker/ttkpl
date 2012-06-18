@@ -196,8 +196,8 @@ class temperatures {
 
         // PMIP2 Data
         $this->whens = array (PMIP2::T_PRE_INDUSTRIAL_0KA, PMIP2::T_MID_HOLOCENE_6KA, PMIP2::T_LGM_21KA);
-        $vars = array (PMIP2::TMAX_VAR, PMIP2::TMIN_VAR);
-        $models = array (PMIP2::MODEL_HADCM3M2);
+        $vars = array (PMIP2::TMAX_VAR, PMIP2::TMIN_VAR, PMIP2::TMEAN_VAR);
+        $models = array (PMIP2::MODEL_HADCM3M2, PMIP2::MODEL_CCSM);
         foreach ($models as $model)
             foreach ($this->whens as $when)
                 foreach ($vars as $var)
@@ -270,10 +270,16 @@ class temperatures {
         return $sine;
     }
     function getLocalMeanTempAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
-        $min = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getInterpolatedValueFromFacet ($where);
-        $max = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMAX_VAR]->getInterpolatedValueFromFacet ($where);
+        
+        // This is not cool at all but we need a bit or a redesign and this will have to do in its place for now:
+        //$this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->importer->_extractTemps($where->getLat(), $where->getLon(), PMIP2::TMEAN_VAR, $pmipTimeConst, PMIP2::MODEL_CCSM);
 
-        $mean = datum::mean (array ($min, $max));
+        //$min = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMIN_VAR]->getInterpolatedValueFromFacet ($where);
+        //$max = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::TMAX_VAR]->getInterpolatedValueFromFacet ($where);
+        
+        $mean = $this->pmipIdx[PMIP2::MODEL_CCSM][$pmipTimeConst][PMIP2::TMEAN_VAR]->getInterpolatedValueFromFacet ($where);
+        
+        //$mean = datum::mean (array ($min, $max));
         return $mean;
     }
     function getLocalAmplitudeAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
@@ -457,6 +463,7 @@ class temporothermal {
     }
     function setBurial (burial $b) {
         $this->burial = $b;
+        return true;
     }
     function setTempSource (temperatures $t) {
         $this->temperatures = $t;

@@ -82,12 +82,15 @@ class pmip extends dataSet {
         
     }
     
-    function getRealValueFromFacet (facet $facet) {
-        //$temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+    function getRealValueFromFacet (facet $facet/*, $lookup_varname = null*/) {
+        /*if ($lookup_varname === null) $lookup_varname = $this->varname;*/
+
+        // Get an array of  monthly
+        $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
         // this is a bit of a hack to force the use of the mean sine instead of max and min sines.
-        $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), PMIP2::TMEAN_VAR, $this->timename, PMIP2::MODEL_CCSM);
+        //$temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), PMIP2::TMEAN_VAR, $this->timename, PMIP2::MODEL_CCSM);
         
-        $scr = scalarFactory::makeKelvin ($this->importer->_getMaxMin ($temps, $this->varname), $this);
+        $scr = scalarFactory::makeKelvin ($this->importer->_getMaxMinMeanByVarName ($temps, $this->varname), $this);
         // lower dimensional datum objects go closer to the scalar in the tree. why tree? don't know.
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);

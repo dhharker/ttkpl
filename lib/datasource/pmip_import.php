@@ -60,11 +60,32 @@ class PMIP2 {
         return $temps;
         
     }
-    
+
+    // deprecated in favour of getMaxMinMeanByVarName
     function _getMaxMin ($tempArr, $v = self::TMAX_VAR) {
         sort ($tempArr, SORT_NUMERIC);
         return ($v == self::TMAX_VAR) ? $tempArr[11] : $tempArr[0];
     }
+    /**
+     *
+     * @param <type> $tempArr array of monthly temperatures
+     * @param <type> $v self::T(MIN|MAX|MEAN)_VAR determines processing of temps array
+     * @return <type> the max, min or mean of values in the temps array according to the source var name or the whole array if unknown varname.
+     */
+    function _getMaxMinMeanByVarName ($tempArr, $v = self::TMAX_VAR) {
+        sort ($tempArr, SORT_NUMERIC);
+        switch ($v) {
+            case self::TMAX_VAR:
+                return $tempArr[11];
+            case self::TMIN_VAR:
+                return $tempArr[0];
+            case self::TMEAN_VAR:
+                return array_sum($tempArr) / count ($tempArr);
+        }
+        return $tempArr;
+    }
+
+
     function _getDayMinOffset ($tempArr, $v = self::TMIN_VAR) {
         $min = $this->_getMaxMin ($tempArr, $v);
         $mmin = array_filter ($tempArr, function ($v) use (&$min) {
