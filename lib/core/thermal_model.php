@@ -134,7 +134,8 @@ class burial extends wuno {
                 $newSine->desc = "Thermally buffered temperature sine (layer " . $li+1 . ")";
                 $newSine->setSine ($newSine->parentValues['mean'], $newAmp, $newOff);
                 $wksn = $newSine;
-     echo "intermediate ampl $li: " . $newAmp->getScalar()->getValue() / 2 . "\n";
+                // DEBUG:
+                // echo "intermediate ampl $li: " . $newAmp->getScalar()->getValue() / 2 . "\n";
             }
             return $newSine;
         }
@@ -391,7 +392,8 @@ class temporothermal {
             if ($graphTeff && $this->controllingThermalAge !== null) {
                 $tmpTeff = $this->controllingThermalAge->getTeffFromSine($this->wsSine);
                 $tC = $tmpTeff->getValue()  + scalarFactory::kelvinOffset;
-                log_message ('debug', "Teff @ $years is $tC");
+                // DEBUG:
+                // log_message ('debug', "Teff @ $years is $tC");
                 $this->twData['teff'][$years] = $tC;
             }
 
