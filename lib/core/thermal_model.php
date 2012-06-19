@@ -473,7 +473,7 @@ class temporothermal {
     function setChunkSize ($chYears) {
         $this->chunkSize = $chYears;
     }
-    function autoChunkSize ($l = 5, $u = 2500) {
+    function autoChunkSize ($l = 5, $u = 25000) {
         //return 1;
         $a = $this->rangeYrs;
         // $a / ~500 seems a good value for final results
