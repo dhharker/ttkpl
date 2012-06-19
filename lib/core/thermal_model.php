@@ -413,12 +413,14 @@ class temporothermal {
             $spls[] = $endTime - $prevSplTime;
             $prevTime = $endTime;
 
+            log_message ('debug', sprintf ("", count ($spls), (array_sum ($spls) / count ($spls))) );
+
         }
         
         $tHist->setBins ($numBins);
         $tHist->getBinCounts ($xText);
         
-        $this->twData['spl_yrs_sec'] = sum ($spls) / count ($spls);
+        $this->twData['spl_yrs_sec'] = array_sum ($spls) / count ($spls);
 
         return $tHist;
     }
