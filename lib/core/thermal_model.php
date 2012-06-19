@@ -411,7 +411,7 @@ class temporothermal {
 
 
             $endTime = microtime(true);
-            $lastTime = $endTime - $prevSplTime;
+            $lastTime = $endTime - $prevTime;
             $spls[] = $lastTime;
             $prevTime = $endTime;
 
