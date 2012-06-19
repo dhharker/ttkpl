@@ -372,6 +372,11 @@ class temporothermal {
         }
         
         log_message ('debug', " * timeWalk: doing the timewalk:");
+
+        $prevTime = microtime(true);
+        $prevSplTime = 0.0;
+        $spls = array ();
+
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
             $this->setDate (new palaeoTime ($years));
             $ts = $this->tempsFromWsSine ();
@@ -403,10 +408,18 @@ class temporothermal {
             if (isset ($this->gtc))
                 $this->twData['ganom'][$years] = $this->gtc->getValue();
 
+
+            $endTime = microtime(true);
+            $spls[] = $endTime - $prevSplTime;
+            $prevTime = $endTime;
+
         }
         
         $tHist->setBins ($numBins);
         $tHist->getBinCounts ($xText);
+        
+        $this->twData['spl_yrs_sec'] = sum ($spls) / count ($spls);
+
         return $tHist;
     }
     function tempsFromWsSine () {
