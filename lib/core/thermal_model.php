@@ -429,7 +429,7 @@ class temporothermal {
         $tHist->setBins ($numBins);
         $tHist->getBinCounts ($xText);
         
-        $this->twData['spl_yrs_sec'] = array_sum ($spls) / count ($spls);
+        $this->twData['sec_spl_yr'] = array_sum ($spls) / count ($spls);
 
         return $tHist;
     }
