@@ -376,6 +376,7 @@ class temporothermal {
         $prevTime = microtime(true);
         $prevSplTime = 0.0;
         $spls = array ();
+        $debugClock = 0;
 
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
             $this->setDate (new palaeoTime ($years));
@@ -410,11 +411,19 @@ class temporothermal {
 
 
             $endTime = microtime(true);
-            $spls[] = $endTime - $prevSplTime;
+            $lastTime = $endTime - $prevSplTime;
+            $spls[] = $lastTime;
             $prevTime = $endTime;
 
-            log_message ('debug', sprintf ("Done %d samples, current speed: %03.1f spls/sec", count ($spls), (array_sum ($spls) / count ($spls))) );
-
+            if ($debugClock == 0) {
+                $cnumSpls = count ($spls);
+                $avgSps = (array_sum ($spls) / $cnumSpls);
+                $avgSpSp = 1 / $avgSps;
+                $SpSp = 1 / $lastTime;
+                log_message ('debug', sprintf ("Done %d samples, avg. speed: %01.5f sec/spl (%01.3f/sec), last sample: %01.5f sec (%01.3f/sec)", $cnumSpls, $avgSps, $avgSpSp, $lastTime, $SpSp) );
+            }
+            $debugClock = ++$debugClock % 10;
+            
         }
         
         $tHist->setBins ($numBins);
