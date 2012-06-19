@@ -413,7 +413,7 @@ class temporothermal {
             $spls[] = $endTime - $prevSplTime;
             $prevTime = $endTime;
 
-            log_message ('debug', sprintf ("", count ($spls), (array_sum ($spls) / count ($spls))) );
+            log_message ('debug', sprintf ("Done %d samples, current speed: %03.1f spls/sec", count ($spls), (array_sum ($spls) / count ($spls))) );
 
         }
         
