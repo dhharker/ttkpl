@@ -471,7 +471,7 @@ class temporothermal {
     function setChunkSize ($chYears) {
         $this->chunkSize = $chYears;
     }
-    function autoChunkSize ($l = 1, $u = 250) {
+    function autoChunkSize ($l = 5, $u = 2500) {
         //return 1;
         $a = $this->rangeYrs;
         // $a / ~500 seems a good value for final results
@@ -529,6 +529,7 @@ class temporothermal {
     }
     function _updateRange () {
         $this->rangeYrs = $this->startDate->distanceTo ($this->stopDate);
+        $this->autoChunkSize();
         //echo (print_r (array ($this->startDate, $this->stopDate), TRUE));
     }
 
