@@ -7,7 +7,7 @@ class bil_import extends RawImporter {
     
 
     private $dbroot = ''; // here be folders containing data and header files
-    private $files = array(); // here be a list of files/folders in dbroot
+    public $files = array(); // here be a list of files/folders in dbroot
     private $resolution = null;
 
     function __construct ($path, $resolution) {
