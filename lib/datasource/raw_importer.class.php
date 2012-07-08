@@ -34,7 +34,7 @@
  * This moved out of PMIP2 class as it is mostly generic.
  */
 
-abstract class RawImporter {
+class RawImporter {
 
     public $files = array ();
 
