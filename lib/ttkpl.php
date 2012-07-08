@@ -51,7 +51,7 @@ require_once 'core/time_and_space.php';
 require_once 'core/thermal_model.php';
 require_once 'core/thermal_age.php';
 // base class for file-based geo-data parsing classes (i.e. pmip2 and worldclim)
-require_once 'datasource/raw_importer.php';
+require_once 'datasource/raw_importer.class.php';
 // datasources specific to the model
 require_once 'datasource/bintanja_import_normalised.php';
 require_once 'datasource/pmip_import_normalised.php';
