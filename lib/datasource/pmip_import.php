@@ -155,7 +155,7 @@ class PMIP2 {
     }
     
     function _getElevationFromOutput ($strin) {
-        $expr = "/\s(\d+\.\d+\s+){1}\s*$/";
+        $expr = '/.*?(\d+\.\d+\s+)\s*$/';
         if (preg_match ($expr, $strin, $matches) == 0)
             return false;
         //preg_match_all ("(\d+\.\d+)", $matches[0], $matches);
