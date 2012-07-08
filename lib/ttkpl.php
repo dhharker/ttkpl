@@ -55,6 +55,7 @@ require_once 'datasource/raw_importer.class.php';
 // datasources specific to the model
 require_once 'datasource/bintanja_import_normalised.php';
 require_once 'datasource/pmip_import_normalised.php';
+require_once 'datasource/worldclim_import_normalised.php';
 // external libs
 require_once 'external/PHP_GNUPlot.php';
 // for generating nice reports, graphs etc. for use online or in pdfs
