@@ -112,6 +112,7 @@ class pmip extends dataSet {
         $scr = scalarFactory::makeMetres ($this->importer->_getElevationFromOutput ($elev, $this->varname), $this);
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);
+        return $sd;
     }
 
     function getPalaeoTime ($timeName = NULL) {
