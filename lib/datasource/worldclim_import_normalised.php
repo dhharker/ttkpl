@@ -59,4 +59,12 @@ class worldclim extends dataSet {
 
         $this->importer = new bil_import ("worldclim", self::RES_5M);
     }
+
+    public function getNearestRealFacets (facet $facet) {}
+    public function isRealFacet (facet $facet) {}
+    public function getRealValueFromFacet (facet $facet) {}
+    public function getInterpolatedValueFromFacet (facet $facet) {}
+    public function getPalaeoTime () {}
+    public static function getBlankScalar () {}
+
 }
