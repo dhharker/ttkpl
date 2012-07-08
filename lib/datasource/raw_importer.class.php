@@ -35,6 +35,9 @@
  */
 
 abstract class RawImporter {
+
+    public $files = array ();
+
         /**
      *
      * @param <type> $tempArr array of monthly temperatures

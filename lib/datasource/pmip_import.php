@@ -46,8 +46,6 @@ class PMIP2 extends RawImporter {
     const NETCDF_DATA_EXT = 'nc';
     const NETCDF_CTRL_EXT = 'ctrl';
     
-    private $files = array ();
-    
     function getTemps ($lat, $lon) {
         $times = array (self::T_LGM_21KA, self::T_MID_HOLOCENE_6KA, self::T_PRE_INDUSTRIAL_0KA);
         $vars = array (self::TMAX_VAR, self::TMIN_VAR);
