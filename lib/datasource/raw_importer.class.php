@@ -134,14 +134,6 @@ abstract class RawImporter {
         return $matches[0];
     }
 
-    function _genDataFileName ($varname, $timename, $modelname) {
-        $expr = "/^$varname.*?$timename.*?$modelname.*?\." . self::NETCDF_DATA_EXT . "$/";
-
-        foreach ($this->files as $f)
-            if (preg_match ($expr, $f) > 0) {
-                $this->filename = $f;
-                return $f;
-            }
-    }
+    
 
 }
