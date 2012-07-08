@@ -103,6 +103,28 @@ class PMIP2 {
     }
 
 
+    function _extractElevation ($lat, $lon, $varname, $timename, $modelname) {
+
+        // This static cache thing is a bit dodgy, but it does speed things up!
+        static $cache = array ();
+
+        $ak = "$lat#$lon#$varname#$timename#$modelname";
+        if (!empty ($cache[$ak])) return $cache[$ak];
+
+        $file = $this->_genDataFileName ($varname, $timename, $modelname);
+
+        $cmd = sprintf (self::EXTRACT_COMMAND, $lon, $lat, $varname, $this->dbroot . $file);
+
+        exec ($cmd, $r);
+        $r = implode("\n", $r);
+
+        $ev = $this->_getElevationFromOutput ($r);
+        $cache[$ak] = $ev;
+
+        return $ev;
+
+    }
+
     function _extractTemps ($lat, $lon, $varname, $timename, $modelname) {
 
         // This static cache thing is a bit dodgy, but it does speed things up!
@@ -115,23 +137,31 @@ class PMIP2 {
 
         $cmd = sprintf (self::EXTRACT_COMMAND, $lon, $lat, $varname, $this->dbroot . $file);
 
-         exec ($cmd, $r);
+        exec ($cmd, $r);
         $r = implode("\n", $r);
 
-        $ts = $this->_getTempsFromOutput  ($r);
+        $ts = $this->_getTempsFromOutput ($r);
         $cache[$ak] = $ts;
 
         return $ts;
     }
     
     function _getTempsFromOutput ($strin) {
-        $expr = "/\s(\d+\.\d+\s+){12}/";
+        $expr = "/\s(\d+\.\d+\s+){1,12}/";
         if (preg_match ($expr, $strin, $matches) == 0)
             return false;
         preg_match_all ("(\d+\.\d+)", $matches[0], $matches);
         return $matches[0];
     }
     
+    function _getElevationFromOutput ($strin) {
+        $expr = "/\s(\d+\.\d+\s+){1}\s*$/";
+        if (preg_match ($expr, $strin, $matches) == 0)
+            return false;
+        //preg_match_all ("(\d+\.\d+)", $matches[0], $matches);
+        return $matches[0];
+    }
+
     function _genDataFileName ($varname, $timename, $modelname) {
         $expr = "/^$varname.*?$timename.*?$modelname.*?\." . self::NETCDF_DATA_EXT . "$/";
 

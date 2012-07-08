@@ -314,6 +314,12 @@ class temperatures {
         return $dmin;
     }
 
+    function getLocalElevationAt (facet $where, $pmipTimeConst = PMIP2::T_PRE_INDUSTRIAL_0KA, $model = PMIP2::MODEL_HADCM3M2) {
+        $elev = $this->pmipIdx[$model][$pmipTimeConst][PMIP2::ALT_VAR]->getElevationFromFacet ($where);
+        //var_dump ($dmin); die("*");
+        return $elev;
+    }
+
 }
 
 /*

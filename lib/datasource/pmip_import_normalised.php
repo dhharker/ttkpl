@@ -107,6 +107,14 @@ class pmip extends dataSet {
         return $sd;
 
     }
+    function getElevationFromFacet (facet $facet) {
+        $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+
+        $scr = scalarFactory::makeMetres ($this->importer->_getDayMinOffset ($temps, $this->varname), $this);
+        $td = new temporalDatum ($this->getPalaeoTime (), $scr);
+        $sd = new spatialDatum ($facet, $td);
+    }
+
     function getPalaeoTime ($timeName = NULL) {
         if ($timeName === NULL)
             $timeName = $this->timename;
