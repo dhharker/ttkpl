@@ -41,18 +41,22 @@ class worldclim extends dataSet {
     const T_PRE_INDUSTRIAL_0KA = "0k";
     const TMIN_VAR = 'tmin';
     const TMAX_VAR = 'tmax';
-    //const TMEAN_VAR = 'tas';
+    const TMEAN_VAR = 'NOT AVAILABLE BUT MUST BE DEFINED';
     const ALT_VAR = 'alt';
+    const RES_5M = '5m';
 
-    function __construct ($varname = NULL, $timename = NULL) {
+    function __construct ($varname = NULL, $timename = NULL, $resolution = NULL) {
         if ($varname === NULL)
-            $varname = worldclim::TMIN_VAR;
+            $varname = self::TMIN_VAR;
         if ($timename === NULL)
-            $timename = worldclim::T_PRE_INDUSTRIAL_0KA;
+            $timename = self::T_PRE_INDUSTRIAL_0KA;
+        if ($resolution === NULL)
+            $resolution = self::RES_5M;
 
         $this->varname = $varname;
         $this->timename = $timename;
+        $this->resolution = $resolution;
 
-        $this->importer = new bil_import ();
+        $this->importer = new bil_import ("worldclim", self::RES_5M);
     }
 }
