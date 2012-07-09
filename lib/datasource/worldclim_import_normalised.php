@@ -38,7 +38,7 @@ class worldclim extends dataSet {
 
     //const T_LGM_21KA = "21k";
     //const T_MID_HOLOCENE_6KA = "6k";
-    const T_PRE_INDUSTRIAL_0KA = "0k";
+    const T_PRE_INDUSTRIAL_0KA = "0ka";
     const TMIN_VAR = 'tmin';
     const TMAX_VAR = 'tmax';
     const TMEAN_VAR = 'NOT AVAILABLE BUT MUST BE DEFINED';
@@ -58,10 +58,22 @@ class worldclim extends dataSet {
         $this->resolution = $resolution;
 
         $this->importer = new bil_import ("worldclim", self::RES_5M);
+        $this->importer->loadDB ($varname, $timename, $resolution);
+        
+        print_r ($this->importer->read (53,1));
     }
 
+    function _isVarSeasonal ($var) {
+        return ($var == self::ALT_VAR) ? FALSE : TRUE;
+    }
+
+    function isRealFacet (facet $facet) {
+        return ($this->importer->_isRealLat($facet->getLat ()) && $this->importer->_isRealLon($facet->getLon ())) ? TRUE : FALSE;
+    }
+
+
+
     public function getNearestRealFacets (facet $facet) {}
-    public function isRealFacet (facet $facet) {}
     public function getRealValueFromFacet (facet $facet) {}
     public function getInterpolatedValueFromFacet (facet $facet) {}
     public function getPalaeoTime () {}
