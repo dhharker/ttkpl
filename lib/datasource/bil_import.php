@@ -46,19 +46,11 @@ class bil_import extends RawImporter {
         }
         return false;
     }
-    function _rehash () {
-        if (count ($this->currentHeader) == 0)
-            die ("No header!?");
-        //debug ($this->currentHeader);
-        //debug ($this->currentHeader['YDIM']);
-    }
     function _isRealLat ($lat) {
-        $this->_rehash ();
         return ( fmod (($lat +  90 - (0.5 * $this->currentHeader['YDIM'])), floatval($this->currentHeader['YDIM'])) == 0 &&
                  ($lat >= $this->currentHeader['MinY'] && $lat <= $this->currentHeader['MaxY'])         ) ? TRUE : FALSE;
     }
     function _isRealLon ($lon) {
-        $this->_rehash ();
         return ( fmod (($lon +  180 - (0.5 * $this->currentHeader['XDIM'])), floatval ($this->currentHeader['XDIM'])) == 0 &&
                  ($lon >= $this->currentHeader['MinX'] && $lon <= $this->currentHeader['MaxX'])         ) ? TRUE : FALSE;
     }
@@ -82,9 +74,25 @@ class bil_import extends RawImporter {
         if ($bytes === null) $bytes = $this->currentHeader['NBITS'] / 8;
         $fh = fopen ($filename, 'r');
         fseek ($fh, $offset);
-        print_r (fread($fh, $bytes));
+        $val = $this->_decodeBinary(fread($fh, $bytes));
         fclose ($fh);
-        die();
+        return $val;
+    }
+    /**
+     *
+     * @param string $str binary data to decode
+     * @param bool $signed or unsigned
+     * @return int
+     */
+    function _decodeBinary ($str, $signed = true) {
+        switch (strlen ($str)) {
+            case 1:
+                $p = ($signed) ? 'c' : 'C'; break;
+            case 2:
+                $p = ($signed) ? 's' : 'S'; break;
+
+        }
+        return array_shift (unpack ("s", $str));
     }
     function read ($lat, $lon) {
         return $this->_readNumFromFile ($this->currentHeader['DATA_FILE'], $this->_getBILByteOffset($lat, $lon));

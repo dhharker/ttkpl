@@ -60,7 +60,7 @@ class worldclim extends dataSet {
         $this->importer = new bil_import ("worldclim", self::RES_5M);
         $this->importer->loadDB ($varname, $timename, $resolution);
         
-        print_r ($this->importer->read (53,1));
+        //print_r ($this->importer->read (53,-1));
     }
 
     function _isVarSeasonal ($var) {
@@ -73,8 +73,17 @@ class worldclim extends dataSet {
 
 
 
-    public function getNearestRealFacets (facet $facet) {}
-    public function getRealValueFromFacet (facet $facet) {}
+    public function getNearestRealFacets (facet $facet) {
+        // do this 
+    }
+    
+    // !! ACHTUNG SHOULD RETURN A DATUM-DATUM-SCALAR NEST!
+    // !! TESTING ONLY !!
+    public function getRealValueFromFacet (facet $facet) {
+        if (!$this->isRealFacet($facet)) return false;
+        return $this->importer->read ($facet->getLat (), $facet->getLon ());
+    }
+
     public function getInterpolatedValueFromFacet (facet $facet) {}
     public function getPalaeoTime () {}
     public static function getBlankScalar () {}
