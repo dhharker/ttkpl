@@ -33,7 +33,7 @@ interface dataSetInterface {
     public function getRealValueFromFacet (facet $facet);
     public function getInterpolatedValueFromFacet (facet $facet);
     public function getPalaeoTime ();
-    public static function getBlankScalar ();
+    public static function getBlankScalar ($iVal, dataset $ds);
 }
 
 abstract class dataSet extends taUtils implements dataSetInterface {
@@ -42,12 +42,12 @@ abstract class dataSet extends taUtils implements dataSetInterface {
         return "Abstract dataset wrapper class.";
     }
 
-    public static function getBlankScalar ($a = NULL, $b = NULL) {
+    public static function getBlankScalar ($iVal = null, dataset $ds = null) {
         // once we're using  stuff other than temperature with this, will need
         // to implement in each class and use this here:
         //return new scalar ($a, $b);
         // until then use AUs because could be abs/rel deg C/K:
-        return scalarFactory::makeAU ($a, $b);
+        return scalarFactory::makeAU ($iVal, $ds);
     }
 
     function getInterpolatedValueFromFacet (\ttkpl\facet $facet) {
@@ -58,7 +58,11 @@ abstract class dataSet extends taUtils implements dataSetInterface {
         $values = array ();
         $weights = array ();
         foreach ($nearFacets as $fi => $nf) {
+            //debug ($this->getRealValueFromFacet($nf));
+            //debug ($this->importer->currentHeader);
+            // bug:
             $values[$fi] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
+            
             $weights[$fi] = $facet->distanceTo($nf)->getValue();
             //$weights[$fi] = $weights[$fi];
         }

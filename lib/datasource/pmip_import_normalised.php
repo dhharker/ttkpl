@@ -33,9 +33,9 @@ class pmip extends dataSet {
     public $importer = NULL;
     
     // These contain values of constants from the base PMIP2 importer class
-    private $varname;
-    private $timename;
-    private $modelname;
+    public $varname;
+    public $timename;
+    public $modelname;
     
     
     function __construct ($varname = NULL, $timename = NULL, $modelname = NULL) {
@@ -107,6 +107,7 @@ class pmip extends dataSet {
         return $sd;
 
     }
+    /** OLD:
     function getElevationFromFacet (facet $facet) {
         $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
         $scr = scalarFactory::makeMetres (floatval ($elev), $this);
@@ -114,6 +115,15 @@ class pmip extends dataSet {
         $sd = new spatialDatum ($facet, $td);
         return $sd;
     }
+    */
+    function getElevationFromFacet (facet $facet) {
+        $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+        $scr = scalarFactory::makeMetres (floatval ($elev), $this);
+        $td = new temporalDatum ($this->getPalaeoTime (), $scr);
+        $sd = new spatialDatum ($facet, $td);
+        return $sd;
+    }
+
 
     function getPalaeoTime ($timeName = NULL) {
         if ($timeName === NULL)

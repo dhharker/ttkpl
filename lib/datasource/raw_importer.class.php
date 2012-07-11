@@ -57,7 +57,6 @@ class RawImporter {
         $expr = '/.*?(\d+\.\d+\s+)\s*$/';
         if (preg_match ($expr, $strin, $matches) == 0)
             return false;
-        //preg_match_all ("(\d+\.\d+)", $matches[0], $matches);
         return $matches[0];
     }
 
