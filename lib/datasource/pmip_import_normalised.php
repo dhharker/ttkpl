@@ -117,6 +117,7 @@ class pmip extends dataSet {
     }
     */
     function getElevationFromFacet (facet $facet) {
+        if (!$this->isRealFacet($facet)) return $this->getInterpolatedValueFromFacet ($facet);
         $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
         $scr = scalarFactory::makeMetres (floatval ($elev), $this);
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
@@ -165,7 +166,7 @@ class pmip extends dataSet {
     function _isWN ($n) {
         /*$n *= ($n < 0) ? -1 : 1;
         return ($n + 0.0 == ((int) $n) + 0.0) ? FALSE : TRUE;*/
-        return (round (abs($n)) == abs($n)) ? true : false;
+        return (round ($n) == $n) ? true : false;
     }
     
 }
