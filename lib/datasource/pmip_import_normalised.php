@@ -56,7 +56,7 @@ class pmip extends dataSet {
     function getNearestRealFacets (facet $facet) {
         if (!is_object ($facet) || !is_a ($facet, '\ttkpl\latLon'))
             return FALSE;
-        
+
         $lat = $facet->getLat ();
         $lon = $facet->getLon ();
         
@@ -70,11 +70,11 @@ class pmip extends dataSet {
         $co = ceil ($lon);
         
         $out[] = new latLon ($fa, $fo);
-        if ($ov == TRUE)
+        if ($ov == FALSE)
             $out[] = new latLon ($fa, $co);
-        if ($av == TRUE) {
+        if ($av == FALSE) {
             $out[] = new latLon ($ca, $fo);
-            if ($ov == TRUE)
+            if ($ov == FALSE)
                 $out[] = new latLon ($ca, $co);
         }
         
@@ -82,16 +82,20 @@ class pmip extends dataSet {
         
     }
     
-    function getRealValueFromFacet (facet $facet/*, $lookup_varname = null*/) {
-        /*if ($lookup_varname === null) $lookup_varname = $this->varname;*/
-
+    function getRealValueFromFacet (facet $facet) {
+        
         // Get an array of  monthly
         $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
-        // this is a bit of a hack to force the use of the mean sine instead of max and min sines.
+
+        // hack to force the use of the mean sine instead of max and min sines.
         //$temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), PMIP2::TMEAN_VAR, $this->timename, PMIP2::MODEL_CCSM);
+
+        $res = floatval ($this->importer->_getMaxMinMeanByVarName ($temps, $this->varname));
         
-        $scr = scalarFactory::makeKelvin ($this->importer->_getMaxMinMeanByVarName ($temps, $this->varname), $this);
-        // lower dimensional datum objects go closer to the scalar in the tree. why tree? don't know.
+        if ($this->varname == pmip2::ALT_VAR)
+            $scr = scalarFactory::makeMetres ($res, $this);
+        else
+            $scr = scalarFactory::makeKelvin ($res, $this);
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);
         return $sd;
@@ -99,9 +103,7 @@ class pmip extends dataSet {
     function getDayMinOffsetFromFacet (facet $facet) {
         $temps = $this->importer->_extractTemps ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
 
-        //$scr = scalarFactory::makeKelvin ($this->importer->_getMaxMin ($temps, $this->varname), $this);
         $scr = scalarFactory::makeDays ($this->importer->_getDayMinOffset ($temps, $this->varname), $this);
-        // lower dimensional datum objects go closer to the scalar in the tree. why tree? don't know.
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);
         return $sd;
@@ -117,9 +119,13 @@ class pmip extends dataSet {
     }
     */
     function getElevationFromFacet (facet $facet) {
-        if (!$this->isRealFacet($facet)) return $this->getInterpolatedValueFromFacet ($facet);
-        $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
-        $scr = scalarFactory::makeMetres (floatval ($elev), $this);
+        if (!$this->isRealFacet($facet)) {
+            $scr = $this->getInterpolatedValueFromFacet ($facet);
+        }
+        else {
+            $elev = $this->importer->_extractElevation ($facet->getLat (), $facet->getLon (), $this->varname, $this->timename, $this->modelname);
+            $scr = scalarFactory::makeMetres (floatval ($elev), $this);
+        }
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);
         return $sd;
@@ -159,14 +165,14 @@ class pmip extends dataSet {
         $av = $this->_isWN ($lat);
         $ov = $this->_isWN ($lon);
         
-        return (!$av && !$ov) ? TRUE : FALSE;
+        return ($av && $ov) ? TRUE : FALSE;
         
     }
     
     function _isWN ($n) {
         /*$n *= ($n < 0) ? -1 : 1;
         return ($n + 0.0 == ((int) $n) + 0.0) ? FALSE : TRUE;*/
-        return (round ($n) == $n) ? true : false;
+        return (fmod (.0 + $n, 1.0) == 0) ? true : false;
     }
     
 }

@@ -51,23 +51,28 @@ abstract class dataSet extends taUtils implements dataSetInterface {
     }
 
     function getInterpolatedValueFromFacet (\ttkpl\facet $facet) {
+        
         if ($this->isRealFacet ($facet))
             return $this->getRealValueFromFacet ($facet);
 
         $nearFacets = $this->getNearestRealFacets ($facet);
+        
         $values = array ();
         $weights = array ();
         foreach ($nearFacets as $fi => $nf) {
             //debug ($this->getRealValueFromFacet($nf));
             //debug ($this->importer->currentHeader);
             // bug:
-            $values[$fi] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
-            
-            $weights[$fi] = $facet->distanceTo($nf)->getValue();
+            //debug (sprintf ("get real value from facet %02.2f %03.2f", $nf->getLat(), $nf->getLon()));
+            //$values[] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
+            $values[] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
+            $weights[] = $facet->distanceTo($nf)->getValue();
             //$weights[$fi] = $weights[$fi];
         }
 
         $wm = $this->invWeightedMean ($values, $weights);
+        
+        //debug ($nearFacets); debug (compact ('values', 'weights', 'wm'));
         $sc = self::getBlankScalar ($wm, $this);
         return $sc;
 

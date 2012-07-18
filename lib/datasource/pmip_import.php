@@ -46,6 +46,7 @@ class PMIP2 extends RawImporter {
     const NETCDF_DATA_EXT = 'nc';
     const NETCDF_CTRL_EXT = 'ctrl';
 
+    public $error = array ();
 
        /**
      *
@@ -54,6 +55,7 @@ class PMIP2 extends RawImporter {
      * @return <type> the max, min or mean of values in the temps array according to the source var name or the whole array if unknown varname.
      */
     function _getMaxMinMeanByVarName ($tempArr, $v = self::TMAX_VAR) {
+        $tempArr = (array) $tempArr;
         sort ($tempArr, SORT_NUMERIC);
         switch ($v) {
             case self::TMAX_VAR:
@@ -63,7 +65,7 @@ class PMIP2 extends RawImporter {
             case self::TMEAN_VAR:
                 return array_sum($tempArr) / count ($tempArr);
         }
-        return $tempArr;
+        return $tempArr[0];
     }
 
 
@@ -138,8 +140,11 @@ class PMIP2 extends RawImporter {
 
         exec ($cmd, $r);
         $r = implode("\n", $r);
-
-        $ts = $this->_getTempsFromOutput ($r);
+        if ($varname == self::ALT_VAR)
+            $ts = $this->_getElevationFromOutput ($r);
+        else
+            $ts = $this->_getTempsFromOutput ($r);
+        //debug ($ts);
         $cache[$ak] = $ts;
 
         return $ts;
