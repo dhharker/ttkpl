@@ -323,12 +323,12 @@ abstract class csvTimeSeries extends dataSet {
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
             if ($tmp === false) {
-                debug ($point);
+                debug ($this->cleanse ($point));
                 throw new \Exception("Unable to read result!");
                 return false;
             }
             if (!\is_a($tmp, '\ttkpl\datum')) {
-                debug ($tmp);
+                debug ($this->cleanse ($tmp));
                 throw new \Exception("Result wasn't a datum");
             }
             $tmpv = $tmp->getScalar()->getValue();

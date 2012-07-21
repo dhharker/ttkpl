@@ -79,5 +79,36 @@ abstract class taUtils {
         return preg_replace (array ('/[^a-z0-9_-]/i', '/(([_-])\2+)/'), array ('_', '_'), strtolower($crap));
     }
 
+
+    /** Filters massive arrays of data out of objects being dumped during debugging/logging
+     *
+     * @param <type> $arrIn
+     * @param <type> $maxN
+     * @param <type> $maxL
+     * @param <type> $l
+     * @return <type> 
+     */
+    function cleanse ($arrIn, $maxN = 1000, $maxL = 6, $l = 0) {
+        foreach ($arrIn as $i => &$c) {
+            if (is_object($c)) {
+                $d = array ();
+                foreach ($c as $x => $y)
+                    $d[$x] = $y;
+                $c = $d;
+            }
+            if (is_array ($c)) {
+                ++$l;
+                if (count ($c) > $maxN || $l > $maxL)
+                    unset ($arrIn[$i]);
+                elseif ($l) {
+                    $c = $this->cleanse ($c, $maxN, $maxL, $l);
+                }
+                $l--;
+            }
+        }
+
+        return $arrIn;
+    }
+
 }
 
