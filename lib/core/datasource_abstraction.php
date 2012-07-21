@@ -322,8 +322,10 @@ abstract class csvTimeSeries extends dataSet {
         $v = array (); $w = array ();
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
-            if (!\is_a($tmp, '\ttkpl\datum'))
+            if (!\is_a($tmp, '\ttkpl\datum')) {
+                debug ($tmp);
                 throw new \Exception("Result wasn't a datum!");
+            }
             $tmpv = $tmp->getScalar()->getValue();
             $v[] = $tmpv;
             $w[] = abs ($facet->distanceTo ($point));// + 1E-9;
