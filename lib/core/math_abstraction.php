@@ -44,7 +44,7 @@ class histogram {
         $this->x = array_merge ($this->x, array_values ($x));
         $this->rehash = TRUE;
     }
-    public function setBins ($numBins, $uBound = 500, $lBound = 250) {
+    public function setBins ($numBins, $uBound = 200, $lBound = 100) {
         if ($numBins == -1 || !(is_numeric ($numBins) && $numBins > 0)) {
             $p = $this->countPoints ();
             $n = 2 * sqrt($p);

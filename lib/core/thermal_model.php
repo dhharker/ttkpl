@@ -81,8 +81,9 @@ class sine extends wuno {
     }
     public function getValue ($offset = 0) {
         // (-1 because period is 1 based, offset is 0 based)
-        $offset %= $this->period - 1;
-        return $this->Ta + $this->A0 * sin ((2 * pi() * ($offset - $this->minOffset)) / $this->period - (0.5*pi()));
+        $offset %= ($this->period - 1);
+        $pi = pi();
+        return $this->Ta + $this->A0 * sin ((2 * $pi * ($offset - $this->minOffset)) / $this->period - (0.5*$pi));
     }
     /**
      * @todo refactor to use scalar everywhere that it's appropriate. 

@@ -43,21 +43,21 @@ class kinetics {
     }
     public function getRate (scalar $T) {
         if ($T->intName == 'DEG_K_ABS')
-            $Tkelvin = $T->getValue ();
+            $Tkelvin = $T->value;
         elseif ($T->intName == 'DEG_C_ABS') {
             $ks = scalarFactory::makeKelvin ($T);
             //print_r ($ks);
-            $Tkelvin = $ks->getValue ();
+            $Tkelvin = $ks->value;
             //print_r ($T);
         }
         else
             return FALSE;
 
-        $RoR = $this->F->getValue() * exp ((-$this->Ea->getValue())/(self::GAS_CONSTANT * $Tkelvin));
+        $RoR = $this->F->value* exp ((-$this->Ea->value)/(self::GAS_CONSTANT * $Tkelvin));
         return scalarFactory::makeMolesPerSecond ($RoR); // i.e. k_T
     }
     public function getTempAtRate (scalar $k) {
-        $Tkelvin = (-$this->Ea->getValue()/self::GAS_CONSTANT) / (log ($k->getValue()) - log ($this->F->getValue()));
+        $Tkelvin = (-$this->Ea->value/self::GAS_CONSTANT) / (log ($k->value) - log ($this->F->value));
         return scalarFactory::makeKelvin ($Tkelvin);
     }
 
