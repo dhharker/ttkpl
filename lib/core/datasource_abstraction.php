@@ -324,10 +324,12 @@ abstract class csvTimeSeries extends dataSet {
             $tmp = $this->getRealValueFromFacet ($point);
             if ($tmp === false) {
                 debug ($this->cleanse ($point));
+                debug ($this->cleanse ($tmp));
                 throw new \Exception("Unable to read result!");
                 return false;
             }
             if (!\is_a($tmp, '\ttkpl\datum')) {
+                debug ($this->cleanse ($point));
                 debug ($this->cleanse ($tmp));
                 throw new \Exception("Result wasn't a datum");
             }
