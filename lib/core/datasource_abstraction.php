@@ -323,7 +323,7 @@ abstract class csvTimeSeries extends dataSet {
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
             if ($tmp === false) {
-                debug ($this->cleanse ($points));
+                debug ($this->cleanse ($facet));
                 debug ($this->cleanse ($tmp));
                 throw new \Exception("Unable to read result!");
                 return false;
