@@ -322,13 +322,9 @@ abstract class csvTimeSeries extends dataSet {
         $v = array (); $w = array ();
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
-            if (!is_a ($tmp, '\ttkpl\scalar')) {
-                \debug("Can't get scalar value from facet ");
-                //\debug (compact ('facet', 'points', 'tpm'));
-                $tmpv = 0;
-            }
-            else
-                $tmpv = $tmp->getScalar()->getValue();
+            if (!\is_a($tmp, '\ttkpl\datum'))
+                throw new \Exception("Result wasn't a datum!");
+            $tmpv = $tmp->getScalar()->getValue();
             $v[] = $tmpv;
             $w[] = abs ($facet->distanceTo ($point));// + 1E-9;
         }
