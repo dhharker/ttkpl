@@ -323,7 +323,8 @@ abstract class csvTimeSeries extends dataSet {
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
             if (!is_a ($tmp, '\ttkpl\scalar')) {
-                \debug("Can't get scalar value from facet " . $facet);
+                \debug("Can't get scalar value from facet ");
+                \debug (compact ('facet', 'points', 'tpm'));
                 $tmpv = 0;
             }
             else
