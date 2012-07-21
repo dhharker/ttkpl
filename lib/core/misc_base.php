@@ -89,6 +89,7 @@ abstract class taUtils {
      * @return <type> 
      */
     function cleanse ($arrIn, $maxN = 1000, $maxL = 6, $l = 0) {
+        if (!\is_object($arrIn) || !\is_array($arrIn)) return $arrIn;
         foreach ($arrIn as $i => &$c) {
             if (is_object($c)) {
                 $d = array ();
