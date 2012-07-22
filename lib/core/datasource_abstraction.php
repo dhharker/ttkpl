@@ -193,15 +193,13 @@ class csvData implements \Iterator {
             throw new \exception ("Couldn't open " . $filename);
         else {
 
+            if ($this->titlesRow1) {
+                $row = fgetcsv ($fh);
+                $this->titles = $row;
+            }
             while (($row = fgetcsv ($fh)) !== FALSE) {
                 $this->data[] = $row;
                 $this->indexedData[$row[0]] = $row[1];
-
-            }
-
-            if ($this->titlesRow1) {
-                $this->titles = array_shift ($this->data);
-                $this->rewind ();
             }
 
             $this->rewind ();
@@ -301,7 +299,9 @@ abstract class csvTimeSeries extends dataSet {
         $min = $this->times[0];
         $max = $this->times[$this->nTimes - 1];
         $cmp = $facet->getYearsBp ();
+        debug ($this->nTimes);
         debug (implode (", ", $this->times));
+        die();
         foreach ($this->times as $time) {
             debug (compact ('time','cmp','max','min'));
             if ($time < $cmp && $time > $min) {
