@@ -301,7 +301,7 @@ abstract class csvTimeSeries extends dataSet {
         $min = $this->times[0];
         $max = $this->times[$this->nTimes - 1];
         $cmp = $facet->getYearsBp ();
-
+        debug (implode (", ", $this->times));
         foreach ($this->times as $time) {
             debug (compact ('time','cmp','max','min'));
             if ($time < $cmp && $time > $min) {
