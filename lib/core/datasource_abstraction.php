@@ -184,7 +184,7 @@ class csvData implements \Iterator {
     }
     function _init ($filename, $tr1) {
 
-        $this->titlesRow1 = ($tr1) ? TRUE : FALSE;
+        $this->titlesRow1 = ($tr1 == true) ? TRUE : FALSE;
         $this->filename = $filename;
         $csv = FALSE;
         if (!\file_exists ($filename))
@@ -283,10 +283,13 @@ abstract class csvTimeSeries extends dataSet {
 
     public $csv = NULL;
     public $times = array ();
+    public $nTimes = 0;
+
 
     function __construct ($csvFile) {
         $this->csv = new csvData ($csvFile);
         $this->times = array_keys ($this->csv->indexedData);
+        $this->nTimes = count ($this->times);
         asort ($this->times, SORT_NUMERIC);
     }
 
@@ -295,15 +298,19 @@ abstract class csvTimeSeries extends dataSet {
             return array ($facet); //return array ($this->getRealValueFromFacet ($facet));
 
         $this->csv->rewind ();
-        $min = -9E20;
-        $max = 9E20;
+        $min = $this->times[0];
+        $max = $this->times[$this->nTimes - 1];
         $cmp = $facet->getYearsBp ();
 
-        foreach ($this->times as $time)
-            if ($time < $cmp && $time > $min)
+        foreach ($this->times as $time) {
+            debug (compact ('time','cmp','max','min'));
+            if ($time < $cmp && $time > $min) {
                 $min = $time;
-            elseif ($time > $cmp && $time < $max)
+            }
+            elseif ($time > $cmp && $time < $max) {
                 $max = $time;
+            }
+        }
 
         $lbF = new palaeoTime ($min, $this);
         $ubF = new palaeoTime ($max, $this);
