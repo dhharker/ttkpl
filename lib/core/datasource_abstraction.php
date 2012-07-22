@@ -307,6 +307,7 @@ abstract class csvTimeSeries extends dataSet {
             if ($time > $cmp)
                 break;
         }
+        
         for ($i = $this->nTimes - 1; $i >= 0; $i--) {
             $time = $this->times[$i];
             if ($time < $max)
@@ -315,11 +316,13 @@ abstract class csvTimeSeries extends dataSet {
                 break;
         }
 
-        //debug (compact ('time','cmp','max','min'));
-        //die();
         $lbF = new palaeoTime ($min, $this);
         $ubF = new palaeoTime ($max, $this);
-        return array ($lbF, $ubF);
+        // This happens when the palaeotime is Out Of Range - max and min will both be the most extreme datapoint towards the OOR year.
+        if ($min == $max)
+            return array ($lbF);
+        else
+            return array ($lbF, $ubF);
 
     }
 /*    function getRealValueFromFacet (facet $facet) {
