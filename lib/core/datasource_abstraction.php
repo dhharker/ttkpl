@@ -296,20 +296,27 @@ abstract class csvTimeSeries extends dataSet {
             return array ($facet); //return array ($this->getRealValueFromFacet ($facet));
 
         $this->csv->rewind ();
-        $min = $this->times[0];
-        $max = $this->times[$this->nTimes - 1];
+        $min = -1000; //$this->times[0];
+        $max = 10000000; //$this->times[$this->nTimes - 1];
         $cmp = $facet->getYearsBp ();
         
-        foreach ($this->times as $time) {
-            debug (compact ('time','cmp','max','min'));
-            if ($time < $cmp && $time > $min) {
+        for ($i = 0; $i < $this->nTimes; $i++) {
+            $time = $this->times[$i];
+            if ($time > $min)
                 $min = $time;
-            }
-            elseif ($time > $cmp && $time < $max) {
+            if ($time > $cmp)
+                break;
+        }
+        for ($i = $this->nTimes - 1; $i >= 0; $i--) {
+            $time = $this->times[$i];
+            if ($time < $max)
                 $max = $time;
-            }
+            if ($time < $cmp)
+                break;
         }
 
+        //debug (compact ('time','cmp','max','min'));
+        //die();
         $lbF = new palaeoTime ($min, $this);
         $ubF = new palaeoTime ($max, $this);
         return array ($lbF, $ubF);
