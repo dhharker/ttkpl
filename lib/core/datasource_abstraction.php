@@ -296,34 +296,29 @@ abstract class csvTimeSeries extends dataSet {
             return array ($facet); //return array ($this->getRealValueFromFacet ($facet));
 
         $this->csv->rewind ();
-        $min = -1000; //$this->times[0];
-        $max = 10000000; //$this->times[$this->nTimes - 1];
+        $min = $this->times[0];
+        $maxi = $this->nTimes - 1;
+        $max = $this->times[$maxi];
         $cmp = $facet->getYearsBp ();
-        
-        for ($i = 0; $i < $this->nTimes; $i++) {
-            $time = $this->times[$i];
-            if ($time > $min)
-                $min = $time;
-            if ($time > $cmp)
-                break;
-        }
-        
-        for ($i = $this->nTimes - 1; $i >= 0; $i--) {
-            $time = $this->times[$i];
-            if ($time < $max)
-                $max = $time;
-            if ($time < $cmp)
-                break;
-        }
 
-        $lbF = new palaeoTime ($min, $this);
-        $ubF = new palaeoTime ($max, $this);
-        // This happens when the palaeotime is Out Of Range - max and min will both be the most extreme datapoint towards the OOR year.
-        if ($min == $max)
-            return array ($lbF);
-        else
-            return array ($lbF, $ubF);
 
+        if ($cmp <= $min) {
+            $return = array (new palaeoTime ($min+0.0, $this));
+        }
+        elseif ($cmp >= $max) {
+            $return = array (new palaeoTime ($max, $this));
+        }
+        else {
+            for ($i = 0; $i < $maxi; $i++) {
+                if ($this->times[$i] < $cmp && $this->times[$i+1] > $cmp) {
+                    $return = array (new palaeoTime ($this->times[$i] + 0, $this),
+                                     new palaeoTime ($this->times[$i+1] + 0, $this));
+                    break;
+                }
+            }
+        }
+        return $return;
+        
     }
 /*    function getRealValueFromFacet (facet $facet) {
         return (isset ($this->csv->indexedData[$facet->getYearsBp ()])) ? $this->csv->indexedData[$facet->getYearsBp ()] : FALSE;
@@ -332,20 +327,20 @@ abstract class csvTimeSeries extends dataSet {
         $points = $this->getNearestRealFacets ($facet);
         
         if (count ($points) == 1) // || $this->isRealFacet ($facet))
-            return $this->getRealValueFromFacet ($facet);
+            return $this->getRealValueFromFacet ($points[0]);
 
         $v = array (); $w = array ();
         foreach ($points as $point) {
             $tmp = $this->getRealValueFromFacet ($point);
             if ($tmp === false) {
-                debug ($this->cleanse ($facet));
-                debug ($this->cleanse ($tmp));
+                //debug ($this->cleanse ($facet));
+                //debug ($this->cleanse ($tmp));
                 throw new \Exception("Unable to read result!");
                 return false;
             }
             if (!\is_a($tmp, '\ttkpl\datum')) {
-                debug ($this->cleanse ($point));
-                debug ($this->cleanse ($tmp));
+                //debug ($this->cleanse ($point));
+                //debug ($this->cleanse ($tmp));
                 throw new \Exception("Result wasn't a datum");
             }
             $tmpv = $tmp->getScalar()->getValue();

@@ -386,7 +386,13 @@ class temporothermal {
         $debugClock = 0;
 
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
-            $this->setDate (new palaeoTime ($years));
+            try {
+                $this->setDate (new palaeoTime ($years));
+            }
+            catch (\Exception $e) {
+                throw $e;
+                return false;
+            }
             $ts = $this->tempsFromWsSine ();
             $tHist->addPoint ($ts);
             
@@ -454,7 +460,12 @@ class temporothermal {
             $this->wsSine = $this->constantSine;
         }
         else {
-            $this->gtc = $this->temperatures->getGlobalMeanAnomalyAt ($d)->getScalar ();
+            $a = $this->temperatures->getGlobalMeanAnomalyAt ($d);
+            if (!\is_a($a, '\ttkpl\datum')) {
+                throw new \Exception ("Couldn't get global mean anomaly at " . $d->getYearsBp() . "b.p.");
+                return false;
+            }
+            $this->gtc = $a->getScalar ();
             $this->setSineFromGlobal ($this->gtc);
         }
     }

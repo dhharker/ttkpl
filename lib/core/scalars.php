@@ -118,7 +118,7 @@ class scalarFactory {
         return (is_numeric ($v) && $v >= $min) ? TRUE : FALSE;
     }
     static function makeYearsBp ($value = "NOW", dataSet &$dataSet = NULL) {
-        if ($value == "NOW")
+        if ($value === "NOW")
             $value = scalarFactory::_getNowBp ();
         $s = new scalar ();
         $s->intName = "YEARS_BEFORE_" . scalarFactory::yearsWBp;
