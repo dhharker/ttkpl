@@ -483,11 +483,22 @@ class temporothermal {
         $newSine = new sine ();
         // localising
         if (is_object ($this->meanCorrection) && is_object ($this->ampCorrection)) {
+
+            // How local mean temperature relates to global mean anomaly
             $lm = $this->meanCorrection->correct ($ganom);
+
+            // Vegetation or not?
             if (is_object ($this->vegCorrection))
                 $lm = $this->vegCorrection->correct ($lm);
 
+            // Altitude correction
+            if (is_a ($this->elevCorrection, '\ttkpl\correction'))
+                $lm = $this->elevCorrection->correct ($lm);
+
+            // How local temperature amplitude relates to GMA
             $la = $this->ampCorrection->correct ($ganom);
+
+
             $newSine->setGenericSine ($lm, $la, $this->initDayMinOffset);
             $this->intermediateSines[] = clone $newSine;
             $this->wsSine = $newSine;
@@ -569,8 +580,9 @@ class temporothermal {
         $diff = ($dataAltM - $siteAltM);
         $offset = ($diff / 1000) * 6.4;
         $t = ($dataAltM > $siteAltM) ? "higher" : "lower";
-        $desc = "Site is {$diff} metres $t than elevation used to calculate source data. This means a change of {$offset}°C";
+        $desc = "Site is " . abs($diff) . " metres $t than elevation used to calculate source data. This means a change of {$offset}°C";
         $co = new offsetCorrection ($offset);
+        $co->describe ($desc);
         $this->elevCorrection = $co;
         return true;
     }
