@@ -492,7 +492,7 @@ class temporothermal {
                 $lm = $this->vegCorrection->correct ($lm);
 
             // Altitude correction
-            if (is_a ($this->elevCorrection, '\ttkpl\correction'))
+            if (is_object ($this->elevCorrection))
                 $lm = $this->elevCorrection->correct ($lm);
 
             // How local temperature amplitude relates to GMA
