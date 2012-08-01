@@ -579,7 +579,7 @@ class temporothermal {
         if ($dataAltM == $siteAltM) return false;
         $diff = ($dataAltM - $siteAltM);
         $offset = ($diff / 1000) * 6.4;
-        $t = ($dataAltM > $siteAltM) ? "higher" : "lower";
+        $t = ($dataAltM < $siteAltM) ? "higher" : "lower";
         $desc = "Site is " . abs($diff) . " metres $t than elevation used to calculate source data. This means a change of {$offset}°C";
         $co = new offsetCorrection ($offset);
         $co->describe ($desc);
