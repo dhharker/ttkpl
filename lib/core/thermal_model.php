@@ -333,6 +333,7 @@ class temporothermal {
     public $meanCorrection;
     public $ampCorrection;
     public $vegCorrection;
+    public $elevCorrection;
     public $burialCorrection;
     public $kinetics;
     public $rangeYrs; // num of years in this temporothermal
@@ -556,6 +557,22 @@ class temporothermal {
             return ($c) ? "veg cover" : "no veg cover";
         else
             return "veg cover unknown";
+    }
+    /**
+     * Corrects temperature from lookup models for the difference in altitude between the model DEM
+     * and the actual site (or value from higher res DEM if that is all that's available)
+     * @param <type> $dataAltM altitude at which the source data are calculated (i.e. coarse DEM)
+     * @param <type> $siteAltM altitude of the actual site (high res)
+     */
+    function setAltitudeLapse ($dataAltM, $siteAltM) {
+        if ($dataAltM == $siteAltM) return false;
+        $diff = ($dataAltM - $siteAltM);
+        $offset = ($diff / 1000) * 6.4;
+        $t = ($dataAltM > $siteAltM) ? "higher" : "lower";
+        $desc = "Site is {$diff} metres $t than elevation used to calculate source data. This means a change of {$offset}°C";
+        $co = new offsetCorrection ($offset);
+        $this->elevCorrection = $co;
+        return true;
     }
     function setTimeRange (palaeoTime $t1, palaeoTime $t2) {
         if ($t1->getYearsBp() > $t2->getYearsBp()) {
