@@ -53,7 +53,7 @@ class PMIP2 extends RawImporter {
     function __construct () {
         $this->ncksPath = '/usr/bin/ncks';
         if (!file_exists($this->ncksPath))
-            die ("Couldn't find ncks. On Debian/Ubuntu derivatives you can try installing the 'nco' package.");
+            throw new \Exception ("Couldn't find ncks. On Debian/Ubuntu derivatives you can try installing the 'nco' package.");
     }
     
     
