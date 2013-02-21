@@ -54,10 +54,11 @@ class PMIP2 extends RawImporter {
         $this->ncksPath = '/usr/bin/ncks';
         if (!file_exists($this->ncksPath))
             throw new \Exception ("Couldn't find ncks. On Debian/Ubuntu derivatives you can try installing the 'nco' package.");
+        parent::__construct();
     }
     
     
-       /**
+    /**
      *
      * @param <type> $tempArr array of monthly temperatures
      * @param <type> $v self::T(MIN|MAX|MEAN)_VAR determines processing of temps array
