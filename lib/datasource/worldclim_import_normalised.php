@@ -99,7 +99,8 @@ class worldclim extends dataSet {
     public function getRealElevationFromFacet (facet $facet) {
         if (!$this->isRealFacet($facet)) return false;
         $temps = $this->importer->read ($facet->getLat (), $facet->getLon ());
-        $scr = scalarFactory::makeMetres ($this->importer->_getMaxMinMeanByVarName ($temps, $this->varname), $this);
+        $vv = $this->importer->_getMaxMinMeanByVarName ($temps, $this->varname);
+        $scr = scalarFactory::makeMetres ($vv, $this);
         $td = new temporalDatum ($this->getPalaeoTime (), $scr);
         $sd = new spatialDatum ($facet, $td);
         return $sd;

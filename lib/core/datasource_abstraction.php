@@ -65,12 +65,20 @@ abstract class dataSet extends taUtils implements dataSetInterface {
             // bug:
             //debug (sprintf ("get real value from facet %02.2f %03.2f", $nf->getLat(), $nf->getLon()));
             //$values[] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
-            $values[] = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
-            $weights[] = $facet->distanceTo($nf)->getValue();
+            
+            // In case where there's no data, do nothing
+            $vv = $this->getRealValueFromFacet($nf)->getScalar()->getValue();
+            if ($vv > -9000) { // Junk returned when no data./
+                $values[] = $vv;
+                $weights[] = $facet->distanceTo($nf)->getValue();
+            }
             //$weights[$fi] = $weights[$fi];
         }
-
-        $wm = $this->invWeightedMean ($values, $weights);
+        
+        if (count ($values) > 0)
+            $wm = $this->invWeightedMean ($values, $weights);
+        else // ...in case there are NO valid data points nearby, just return 0 and be done with it :p
+            $wm = 0;
         
         //debug ($nearFacets); debug (compact ('values', 'weights', 'wm'));
         $sc = self::getBlankScalar ($wm, $this);

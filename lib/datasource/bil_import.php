@@ -7,7 +7,7 @@ class bil_import extends RawImporter {
 
     const YOFF_WTF = .4839999;
     const XOFF_WTF = 0;//.9999999;
-
+        
     const INTL_ROUND = 7; // num decimal places to round to when calculating offsets etc. when XDIM or YDIM are irrational
 
     private $dbroot = ''; // here be folders containing data and header files
@@ -21,16 +21,14 @@ class bil_import extends RawImporter {
         $this->resolution = $resolution;
         $this->dbroot = TTKPL_PATH . "data/$path/";
         exec ("find " . $this->dbroot . " -type f", $this->files);
-        
     }
-
+    
     function loadDB ($varname, $timename, $res = null, $ext = null, $monthNo = '') {
 
         if (!isset ($this->headerCache[$varname])) $this->headerCache[$varname] = array ();
         if (!isset ($this->headerCache[$varname][$timename])) $this->headerCache[$varname][$timename] = array ();
         if (isset ($this->headerCache[$varname][$timename][$res])) return $this->headerCache[$varname][$timename][$res];
-
-
+        
         $hdrfile = $this->_genDataFileName ($varname, $timename, $res = null, self::BIL_HDR_EXT, $monthNo = '');
         $datafile = $this->_genDataFileName ($varname, $timename, $res = null, self::BIL_DATA_EXT, $monthNo = '');
         $hdrlines = \explode("\n", file_get_contents ($hdrfile));
