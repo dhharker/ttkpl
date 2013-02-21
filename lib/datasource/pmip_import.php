@@ -33,7 +33,7 @@
 
 class PMIP2 extends RawImporter {
     
-    const EXTRACT_COMMAND = "/usr/bin/ncks -s \"%%f\\n\" -C -h -d lon,%d.0 -d lat,%d.0 -v %s %s";
+    const NCKS_ARGS = " -s \"%%f\\n\" -C -h -d lon,%d.0 -d lat,%d.0 -v %s %s";
     const T_LGM_21KA = "21k";
     const T_MID_HOLOCENE_6KA = "6k";
     const T_PRE_INDUSTRIAL_0KA = "0k";
@@ -47,7 +47,16 @@ class PMIP2 extends RawImporter {
     const NETCDF_CTRL_EXT = 'ctrl';
 
     public $error = array ();
-
+    
+    
+    
+    function __construct () {
+        $this->ncksPath = '/usr/bin/ncks';
+        if (!file_exists($this->ncksPath))
+            die ("Couldn't find ncks. On Debian/Ubuntu derivatives you can try installing the 'nco' package.");
+    }
+    
+    
        /**
      *
      * @param <type> $tempArr array of monthly temperatures
@@ -114,7 +123,7 @@ class PMIP2 extends RawImporter {
 
         $file = $this->_genDataFileName ($varname, $timename, $modelname);
 
-        $cmd = sprintf (self::EXTRACT_COMMAND, $lon, $lat, $varname, $this->dbroot . $file);
+        $cmd = sprintf ($this->ncksPath . self::NCKS_ARGS, $lon, $lat, $varname, $this->dbroot . $file);
 
         exec ($cmd, $r);
         $r = implode("\n", $r);
@@ -136,7 +145,7 @@ class PMIP2 extends RawImporter {
 
         $file = $this->_genDataFileName ($varname, $timename, $modelname);
 
-        $cmd = sprintf (self::EXTRACT_COMMAND, $lon, $lat, $varname, $this->dbroot . $file);
+        $cmd = sprintf ($this->ncksPath . self::NCKS_ARGS, $lon, $lat, $varname, $this->dbroot . $file);
 
         exec ($cmd, $r);
         $r = implode("\n", $r);
