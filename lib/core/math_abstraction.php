@@ -51,8 +51,13 @@ class histogram {
     }
     public function addPoint ($x) {
         $x = (array) $x;
-        foreach ($x as $v)
-            $this->x[$this->ptr++] = $v;
+        foreach ($x as $v) {
+            if ($this->x->getSize() == $this->ptr)
+                $this->x->setSize ($this->x->getSize ()+1);
+            $this->x[$this->ptr] = $v;
+            
+            $this->ptr++;
+        }
         
         $this->rehash = TRUE;
     }
