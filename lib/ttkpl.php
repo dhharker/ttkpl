@@ -36,7 +36,7 @@
 
 define ('TTKPL_PATH', realpath (dirname (__FILE__) . '/../') . '/');
 
-echo "Path: " . TTKPL_PATH . "\n";
+//echo "Path: " . TTKPL_PATH . "\n";
 
 // the abstractions on which the model is built
 require_once 'core/logging.php';
