@@ -385,7 +385,15 @@ class temporothermal {
         $prevSplTime = 0.0;
         $spls = array ();
         $debugClock = 0;
-
+        
+        $tHist->setBins ($numBins);
+        
+        // Pre-calculate the number of points in the histogram
+        $this->_updateRange();
+        $numChunks = floor ($this->rangeYrs / $this->chunkSize);
+        $numTempSamples = scalarFactory::yearLengthDays * $numChunks;
+        $tHist->setNumPoints ($numTempSamples);
+        
         for ($years = $bpStart; $years < $bpStop; $years += $this->chunkSize) {
             try {
                 $this->setDate (new palaeoTime ($years));
@@ -440,7 +448,7 @@ class temporothermal {
             
         }
         
-        $tHist->setBins ($numBins);
+        
         $tHist->getBinCounts ($xText);
         
         $this->twData['sec_spl_yr'] = array_sum ($spls) / count ($spls);

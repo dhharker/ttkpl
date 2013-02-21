@@ -30,7 +30,8 @@
 
 class histogram {
 
-    public $x = array ();
+    public $x = null;
+    public $numPoints = 0; // stores the number of values in x
     public $numBins = -1;
     public $rehash = TRUE;
     public $binWidth = 1;
@@ -38,10 +39,21 @@ class histogram {
     public $bins = array ();     // labels and bins have indexen in synch.
     public $labels = array ();  //
     const roundDp = 6;
-
+    
+    private $ptr = 0;
+    
+    public function __construct() {
+        $this->x = new \SplFixedArray($this->numPoints);
+    }
+    public function setNumPoints ($np) {
+        $this->numPoints = $np;
+        $this->x->setSize ($np);
+    }
     public function addPoint ($x) {
         $x = (array) $x;
-        $this->x += array_values ($x);
+        foreach ($x as $v)
+            $this->x[$this->ptr++] = $v;
+        
         $this->rehash = TRUE;
     }
     public function setBins ($numBins, $uBound = 200, $lBound = 100) {
@@ -79,18 +91,20 @@ class histogram {
                 break;
 
         }
-
+        
+        $xx = $this->x->toArray();
+        
         if ($this->rehash == TRUE) {
             $this->setBins ($this->numBins);
             $this->bins = array ();
-            $this->max = max ($this->x);
-            $this->min = min ($this->x);
-            $this->range = $this->max - $this->min;
-            $this->numPoints = count ($this->x);
+            $this->max = max ($xx) + 0.0;
+            $this->min = min ($xx) + 0.0;
+            $this->range = $this->max - $this->min + 0.0;
+            $this->numPoints = count ($xx);
             $this->binWidth = (($this->range > 0) ? $this->range : 1E-9) / ($this->numBins - 1);
             $this->rehash = FALSE;
         }
-
+        
         for ($bin = 0; $bin < $this->numBins; $bin++) {
             $min = $bin * $this->binWidth + $this->min;
             $max = ($bin + .9999999999999999) * $this->binWidth + $this->min;
@@ -98,7 +112,7 @@ class histogram {
             $this->bins[$bin] = 0;
         }
 
-        foreach ($this->x as $xi => $x) {
+        foreach ($xx as $x) {
             $bin = round (($x - $this->min) / $this->binWidth);
             $this->bins[$bin]++;
         }
