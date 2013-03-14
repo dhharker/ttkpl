@@ -350,6 +350,13 @@ class temporothermal {
     public $intermediateSines = array (); // contains sines as each correction is applied
 
     private $controllingThermalAge = null; // @TODO this properly: ref to thermalAge object pulling the strings to use getTeffFrom(histogram|sine) fns.
+
+    /**/const aCSRangeDivisor = 500;
+    const aCSChunkMin = 5;
+    const aCSChunkMax = 500;// PRODUCTION */
+    /*/const aCSRangeDivisor = 100;
+    const aCSChunkMin = 5;
+    const aCSChunkMax = 100; // DEVELOPMENT */
     
     function __construct () {
 
@@ -535,13 +542,14 @@ class temporothermal {
     function setChunkSize ($chYears) {
         $this->chunkSize = $chYears;
     }
-    function autoChunkSize ($l = 5, $u = 1000) {
-        //return 1;
+    function autoChunkSize ($l = 5) {
+        $l = ($l === null) ? self::aCSChunkMin : $l;
+        
         $a = $this->rangeYrs;
         // $a / ~500 seems a good value for final results
-        // 100 for test
-        $c = round ($a / 500);
-        $c = ($c > $u) ? $u : $c;
+        // 100 for test (value in self::aCSRangeDivisor)
+        // self::aCSRangeDivisor == maximum number of years sampled
+        $c = round ($a / self::aCSRangeDivisor);
         $c = ($c < $l) ? $l : $c;
         $this->setChunkSize ($c);
         return $c;

@@ -57,9 +57,9 @@ class kinetics {
 
         if ($Tkelvin == 0) {
             debug ("Ruh-roh! Was $dbgWas");
-
+            debug ("Error: only temperatures above absolute zero are supported.");
+            die();
         }
-
         $RoR = $this->F->value * exp ((-$this->Ea->value)/(self::GAS_CONSTANT * $Tkelvin));
         return scalarFactory::makeMolesPerSecond ($RoR); // i.e. k_T
     }

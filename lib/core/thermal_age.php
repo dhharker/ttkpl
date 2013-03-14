@@ -61,6 +61,8 @@ class thermalAge {
         return $this->getTempAtRate (scalarFactory::makeMolesPerSecond ($this->getKSec ()));
     }
     public function getKSec () {
+        if (scalarFactory::makeYears ($this->getAge ())->getValue() == 0)
+            die ("ageless TA");
         return $this->getLambda () / scalarFactory::makeSeconds (scalarFactory::makeYears ($this->getAge ()))->getValue();
     }
     public function getKYear () {
