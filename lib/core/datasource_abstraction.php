@@ -189,6 +189,8 @@ class csvData implements \Iterator {
 
     function __construct ($filename, $tr1 = TRUE) {
         return $this->_init ($filename, $tr1);
+        mb_internal_encoding("UTF-8");
+        
     }
     function _init ($filename, $tr1) {
 
@@ -228,6 +230,7 @@ class csvData implements \Iterator {
         if (!$fh)
             throw new exception ("Couldn't open " . $filename . " for writing.");
         else {
+            fprintf($fh, chr(0xEF).chr(0xBB).chr(0xBF));
             if ($this->titlesRow1) {
                 fputcsv ($fh, $this->titles);
             }
