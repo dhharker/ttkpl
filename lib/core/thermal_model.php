@@ -361,6 +361,14 @@ class temporothermal {
     function __construct () {
 
     }
+    
+    /*
+    function setPercentCallback ($callback) {
+        $this->percentCallback = $callback;
+    }
+     * Not currently in use
+     */
+    
     function setControllingThermalAge (\ttkpl\thermalAge $ta) {
         $this->controllingThermalAge = $ta;
     }
