@@ -83,12 +83,15 @@ class PGData {
         // Modified to work properly in context by David Harker, Jun 2011
 //        if ($this->filename) { print "Error: Data file exists [ $this->filename ] !\n"; return; }
         global $tempDir, $IDCounter;
+        if (empty ($tempDir))
+            $tempDir = TMP;
 //        if (!$filename) {
             // generate a file name
-            $filename = $tempDir . '/data_'. ( ++$IDCounter ) .'.txt';
+            $filename = $tempDir . 'data_'. ( ++$IDCounter ) .'.txt';
             global $toRemove;
             $toRemove[] = $filename;
 //        }
+            //die ($filename);
         $fp = fopen($filename, 'w');
         foreach( $this->DataList as $entry ) fwrite($fp, implode("\t", $entry)."\n");
         fclose($fp);
