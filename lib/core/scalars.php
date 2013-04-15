@@ -107,6 +107,9 @@ class scalarFactory {
     static function ad2bp ($yearsAd) {
         return self::_getAdBp($yearsAd);
     }
+    static function bc2bp ($yearsBc) {
+        return $yearsBc + self::yearsWBp;
+    }
     static function secsPerYear () {
         return scalarFactory::yearLengthDays * scalarFactory::secsPerDay();
     }
