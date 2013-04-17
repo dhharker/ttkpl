@@ -247,9 +247,9 @@ print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
          * the file ext can be png, ps or eps
          */
 
-        if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png size {$this->pxSize}\n");
+        if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png transparent truecolor size {$this->pxSize}\n");
         elseif (preg_match("/\.e?ps$/", $pic_filename)) $this->exe( "set term postscript\n");
-        elseif (preg_match("/\.svg$/", $pic_filename)) $this->exe( "set term svg enhanced size {$this->pxSize}\n");
+        elseif (preg_match("/\.svg$/", $pic_filename)) $this->exe( "set term svg dynamic enhanced size {$this->pxSize}\n");
         // you can add more options here to support other formats
         else { $this->exe( "set term png\n"); $pic_filename.=".png"; }
 

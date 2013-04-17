@@ -1,7 +1,7 @@
 <?php namespace ttkpl;
 
 /*
-* Copyright 2008-2011 David Harker
+* Copyright 2008-2013 David Harker
 *
 * Licensed under the EUPL, Version 1.1 or – as soon they
   will be approved by the European Commission - subsequent
@@ -40,6 +40,7 @@ class ttkplPlot {
     public $plotTypes = array ();
     public $plotCols = array ();
     public $plotExtra = array ();
+    public $autoScale = true;
 
     function __construct ($title, $xm = null, $ym = null, $pxSize = null) {
         $this->_init ($title, $xm, $ym, $pxSize);
@@ -112,8 +113,10 @@ class ttkplPlot {
     }
     function plot ($filename = 'untitled_ttkpl_plot.png') {
         echo "Plotting:\n";
-
-        $this->gp->set ("autoscale");
+        
+        if (!!$this->autoScale)
+            $this->gp->set ("autoscale");
+        
         foreach ($this->gridAxes as $g)
             $this->gp->set ("grid $g");
 
