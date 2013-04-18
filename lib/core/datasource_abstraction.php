@@ -202,14 +202,9 @@ class csvData implements \Iterator {
         elseif (!$fh = fopen ($filename, 'r'))
             throw new \exception ("Couldn't open " . $filename);
         else {
-            echo "L1:\n".fgets($fh);
-            rewind($fh);
             if ($this->titlesRow1) {
                 $row = str_getcsv (str_replace(',λ,',',"λ",',fgets($fh)));
                 $this->titles = $row;
-                echo "\nDSA: \n";
-                print_r ($this->titles);
-                die();
             }
             while (($row = fgetcsv ($fh)) !== FALSE) {
                 $this->data[] = $row;
