@@ -30,7 +30,7 @@
 // change this if u need
 //$GNUPLOT = 'C:\gnuplot\bin\pgnuplot.exe'; // for Windows
  $GNUPLOT = "gnuplot";/* > " . TMP . 'jobrun/plotlog.log 2>&1';  // for linux
-echo "Gnuplot with $GNUPLOT\n";*/
+//echo "Gnuplot with $GNUPLOT\n";*/
 $tempDir = TMP;//'./'; // somewhere we can store the temporary data files
 
 // DONT change the code below if you dont know what you are doing
@@ -175,7 +175,7 @@ class GNUPlot {
     }
 
     function setTitle( $title, $extra='' ) {
-echo "Set title: $title\n";
+//echo "Set title: $title\n";
         $this->exe( "set title \"$title\" $extra\n");
     }
 
@@ -271,7 +271,7 @@ print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
         pclose($this->ph);*/
         //sleep(count($this->toRemove) ); // allow gnu plot to finish so that we can safely remove the data files
         foreach($this->toRemove as $filename) unlink($filename);
-        echo "\n" . $this->savedPlot . "\n";
+        //echo "\n" . $this->savedPlot . "\n";
         $this->burn();
     }
 

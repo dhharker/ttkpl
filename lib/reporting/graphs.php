@@ -112,7 +112,7 @@ class ttkplPlot {
         return $this;
     }
     function plot ($filename = 'untitled_ttkpl_plot.png') {
-        echo "Plotting:\n";
+        //echo "Plotting:\n";
         
         if (!!$this->autoScale)
             $this->gp->set ("autoscale");
@@ -134,7 +134,7 @@ class ttkplPlot {
 
         foreach ($this->d as $di => $ds) {
             $this->gp->plotData ($ds, $this->plotTypes[$di], $this->plotCols[$di], $this->da[$di], $this->plotExtra[$di]);
-echo "Legend: " . $ds->legend . "\n";
+//echo "Legend: " . $ds->legend . "\n";
         }
 
         $this->gp->set ("key left below");
