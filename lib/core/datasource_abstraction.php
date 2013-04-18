@@ -193,7 +193,7 @@ class csvData implements \Iterator {
         
     }
     function _init ($filename, $tr1) {
-
+        ini_set('auto_detect_line_endings',TRUE);
         $this->titlesRow1 = ($tr1 == true) ? TRUE : FALSE;
         $this->filename = $filename;
         $csv = FALSE;
@@ -205,7 +205,7 @@ class csvData implements \Iterator {
             echo "L1:\n".fgets($fh);
             rewind($fh);
             if ($this->titlesRow1) {
-                $row = fgetcsv ($fh);
+                $row = str_getcsv (str_replace(',λ,',',"λ",',fgets($fh)));
                 $this->titles = $row;
                 echo "\nDSA: \n";
                 print_r ($this->titles);
