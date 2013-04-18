@@ -206,6 +206,9 @@ class csvData implements \Iterator {
             if ($this->titlesRow1) {
                 $row = fgetcsv ($fh);
                 $this->titles = $row;
+                echo "\nDSA: \n";
+                print_r ($this->titles);
+                die();
             }
             while (($row = fgetcsv ($fh)) !== FALSE) {
                 $this->data[] = $row;
@@ -230,7 +233,7 @@ class csvData implements \Iterator {
         if (!$fh)
             throw new exception ("Couldn't open " . $filename . " for writing.");
         else {
-            //fprintf($fh, chr(0xEF).chr(0xBB).chr(0xBF));
+            //fputs($fh, chr(0xEF).chr(0xBB).chr(0xBF));
             if ($this->titlesRow1) {
                 fputcsv ($fh, $this->titles);
             }
