@@ -51,12 +51,18 @@ class PGData {
     var $filename; // Name of the data file. Can be explicitly specified or automatically generated
     var $DataList; // This is only useful when $filename is not specified
     var $legend; // Title of the data you want to see on the graph
-
+    
+    var $messages = array ();
+    
     function __construct ($legend = '') {
         $this->legend = $legend;
 
     }
-
+    
+    function _msg ($msg) {
+        $this->messages[] = $msg;
+    }
+    
     /**
      * static method to initialize a data object from an external data file
      * the object is just a wrapper to the file
@@ -64,7 +70,7 @@ class PGData {
     function createFromFile($filename, $legend = '')  {
         $Data = new PGData($legend);
         if (!file_exists($filename) || !is_readable($filename)) {
-            print "Error: $filename is not a readable datafile!\n";
+            $this->_msg("Error: $filename is not a readable datafile!\n");
             return NULL;
         }
         $Data->filename = $filename;
@@ -75,7 +81,7 @@ class PGData {
 
     function addDataEntry( $entry ){
         if (@!$filename) $this->DataList[] = $entry;
-        else print "Error: Cannot add an entry into file content [ $this->filename ] !\n";
+        else $this->_msg("Error: Cannot add an entry into file content [ $this->filename ] !\n");
 
     }
 
@@ -212,14 +218,14 @@ class GNUPlot {
 
         $plot = $this->plot;
         if (!$PGData->filename) $PGData->dumpIntoFile();
-        if (!$PGData->filename) { print "Error: Empty dataset!\n"; return; }
+        if (!$PGData->filename) { $this->_msg("Error: Empty dataset!\n"); return; }
 
         $fn = $PGData->filename;
         $title = $PGData->legend;
 //print_r ($PGData);
         if ($axis) $axis = " axis $axis ";
         $this->exe( "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n");
-print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
+//print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
         $this->plot = 'replot';
 
     }
@@ -231,7 +237,7 @@ print "$plot '$fn' using $using title \"$title\" with $method  $axis $extra\n";
          */
         $splot = $this->splot;
         if (!$PGData->filename) $PGData->dumpIntoFile();
-        if (!$PGData->filename) { print "Error: Empty dataset!\n"; return; }
+        if (!$PGData->filename) { $this->_msg("Error: Empty dataset!\n"); return; }
 
         $fn = $PGData->filename;
         $title = $PGData->legend;
