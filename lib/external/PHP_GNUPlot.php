@@ -252,15 +252,37 @@ class GNUPlot {
          * export to $pic_filename
          * the file ext can be png, ps or eps
          */
-
+        
+        $doEpsToPdf = false;
+        
+        // extended for extra formats and to do eps2pdf conversion
         if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png transparent truecolor size {$this->pxSize}\n");
         elseif (preg_match("/\.e?ps$/", $pic_filename)) $this->exe( "set term postscript\n");
+        elseif (preg_match("/\.pdf$/", $pic_filename)) {
+            $this->exe( "set term postscript\n");
+            $pic_filename = preg_replace ('/\.pdf$/i','.eps',$pic_filename);
+            $doEpsToPdf = true;
+        }
         elseif (preg_match("/\.svg$/", $pic_filename)) $this->exe( "set term svg enhanced size {$this->pxSize}\n");
-        // you can add more options here to support other formats
         else { $this->exe( "set term png\n"); $pic_filename.=".png"; }
 
         $this->exe( "set output \"$pic_filename\"\n");
         $this->exe( "replot\n" );
+        
+        if ($doEpsToPdf)
+            $this->_epstopdf ($pic_filename);
+    }
+    
+    // @todo these should be refactored up maybe
+    function _epstopdf ($file) {
+        $cmd = $this->_binexists('epstopdf');
+        if (!$cmd) return false;
+        if (!file_exists ($file)) return false;
+        return shell_exec(sprintf ('%s "%s"', $cmd, $file));
+    }
+    // @todo especially this!
+    function _binexists ($n) {
+        return preg_match ("/$n:\s*(\/(?:.*?)\/$n)(\W.*)?/", trim(shell_exec('whereis "-b" "'.$n.'"')), $m) > 0 ? $m[1] : false;
     }
 
     function reset() {

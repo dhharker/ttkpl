@@ -111,7 +111,8 @@ class ttkplPlot {
         $this->gp->set($toSet);
         return $this;
     }
-    function plot ($filename = 'untitled_ttkpl_plot.png') {
+    function plot ($filename = 'untitled_ttkpl_plot', $xtn = null) {
+        
         //echo "Plotting:\n";
         
         if (!!$this->autoScale)
@@ -139,12 +140,30 @@ class ttkplPlot {
 
         $this->gp->set ("key left below");
         //$this->gp->set ("size ratio 0.5");
-        $this->gp->export($filename);
+        
+        
+        $this->_export ($filename,$xtn);
+            
 
         $this->gp->close();
 
         return true;
     }
+    
+    function _export ($filename = 'untitled_ttkpl_plot', $xtn = null) {
+        return self::__export($this->gp, $filename, $xtn);
+    }
+    
+    static function __export (&$object, $filename = 'untitled_ttkpl_plot', $xtn = null) {
+        if (is_array ($xtn))
+            foreach ($xtn as $xn)
+                $object->export($filename.'.'.$xn);
+        elseif (strlen ($xtn) > 0)
+            $object->export($filename.'.'.$xtn);
+        else
+            $object->export($filename);
+    }
+    
 
 }
 
