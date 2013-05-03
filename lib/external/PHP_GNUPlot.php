@@ -278,7 +278,7 @@ class GNUPlot {
         $cmd = $this->_binexists('epstopdf');
         if (!$cmd) return false;
         if (!file_exists ($file)) return false;
-        return shell_exec(sprintf ('%s "%s"', $cmd, $file));
+        return shell_exec(sprintf ('%s "--autorotate=All" "%s"', $cmd, $file));
     }
     // @todo especially this!
     function _binexists ($n) {
