@@ -255,14 +255,27 @@ class GNUPlot {
         
         $doEpsToPdf = false;
         
+        $pdfSize = '21cm,14.8cm';
+        
         // extended for extra formats and to do eps2pdf conversion
-        if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png transparent truecolor size {$this->pxSize}\n");
-        elseif (preg_match("/\.e?ps$/", $pic_filename)) $this->exe( "set term postscript\n");
+        if (preg_match("/\.png$/", $pic_filename)) $this->exe("set term png enhanced transparent truecolor size {$this->pxSize}\n");
+        elseif (preg_match("/\.e?ps$/", $pic_filename)) $this->exe( "set term postscript size $pdfSize\n");
         elseif (preg_match("/\.pdf$/", $pic_filename)) {
-            $this->exe( "set term postscript\n");
+            $this->exe( "set term pdf enhanced size {$pdfSize}\n");
+            $this->exe( "set encoding utf8\n");
+            //$pic_filename = preg_replace ('/\.pdf$/i','.eps',$pic_filename);
+            $doEpsToPdf = true;
+        }
+        /*elseif (preg_match("/\.pdf$/", $pic_filename)) {
+            $this->exe( "set term postscript eps enhanced color  font 'Verdana,10'\n");
+            $this->exe( "set encoding utf8\n");
             $pic_filename = preg_replace ('/\.pdf$/i','.eps',$pic_filename);
             $doEpsToPdf = true;
         }
+        elseif (preg_match("/\.tex$/", $pic_filename)) {
+            $this->exe( "set terminal epslatex standalone color colortext 10\n");
+            $this->exe( "set encoding utf8\n");
+        }*/
         elseif (preg_match("/\.svg$/", $pic_filename)) $this->exe( "set term svg enhanced size {$this->pxSize}\n");
         else { $this->exe( "set term png\n"); $pic_filename.=".png"; }
 
