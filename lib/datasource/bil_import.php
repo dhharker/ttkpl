@@ -130,7 +130,8 @@ class bil_import extends RawImporter {
             case 4:
                 $p = ($signed) ? 'l' : 'L'; break;
         }
-        return array_shift (unpack ("s", $str));
+        //return array_shift (unpack ("s", $str));
+        return array_shift (unpack ($p, $str));
     }
     function read ($lat, $lon) {
         return $this->_readNumFromFile ($this->currentHeader['DATA_FILE'], $this->_getBILByteOffset($lat, $lon));
